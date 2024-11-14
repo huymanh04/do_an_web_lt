@@ -222,7 +222,7 @@
     <Content Include="Content\styles.css" />
     <Content Include="Css\cre.css" />
     <Content Include="Css\editprofile.css" />
-    <Content Include="Css\pagelisst.css" />
+    <Content Include="Css\page.css" />
     <Content Include="Css\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
