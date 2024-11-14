@@ -1,0 +1,128 @@
+﻿@using PagedList.Mvc
+
+@model do_an_web.Models.Homemol
+@{
+    ViewBag.Title = "Trang chủ admin";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.ti = "Quản Lý sản phẩm";
+}
+<meta charset="utf-8" />
+<link href="~/Css/pagelisst.css" rel="stylesheet" />
+
+@if (ViewBag.check == true)
+{
+    <h2>Tất cả sản phẩm</h2>
+
+
+    <p>
+
+        @Html.ActionLink("Tạo sản phẩm mới", "Create", null, new { @class = "btn btn-edit" })
+       
+    </p>
+    <div class="product-container">
+
+        @foreach (var item in Model.ListProduct1)
+        {
+
+            <div class="product-card">
+                <div class="product-image">
+                    @if (item.images != null)
+                    {
+                        var base64String = Convert.ToBase64String(item.images);
+                        <img src="data:image/png;base64,@base64String" alt="@item.product_name" width="60px" height="60px" />
+                    }
+                </div>
+                <div class="product-info">
+                    <h3>@Html.DisplayFor(modelItem => item.product_name)</h3>
+                    <p>Giá: @Html.DisplayFor(modelItem => item.price)</p>
+                    <p>Miêu tả: @Html.DisplayFor(modelItem => item.description)</p>
+                    <p>Loại: @Html.DisplayFor(modelItem => item.Category1.company_name)</p>
+                    <p>Thể Loại: @Html.DisplayFor(modelItem => item.Category.category_name)</p>
+                </div>
+                <div class="product-actions">
+
+                    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.product_id }, new { @class = "btn btn-edit" })
+                    @Html.ActionLink("Chi tiết", "Details", new { id = item.product_id }, new { @class = "btn btn-details" })
+                    @Html.ActionLink("Xóa", "Delete", new { id = item.product_id }, new { @class = "btn btn-delete" })
+                </div>
+            </div>
+        }
+    </div> <div class="pagination">
+        @Html.PagedListPager(Model.ListProduct1, page => Url.Action("Index", new { page = page }))
+    </div>}
+else
+{ <h2>Bạn chưa đăng nhập mà đi đâu đây</h2>
+}
+<!-- Phân trang -->
+
+@section Styles {
+    <style>
+        
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap; /* Cho phép các khối chuyển sang dòng tiếp theo */
+            gap: 20px; /* Khoảng cách giữa các khối */
+        }
+
+        .product-card {
+            flex: 1 1 calc(25% - 20px); /* Chiều rộng tối đa của mỗi khối (4 khối trên mỗi hàng) */
+            background-color: #fff; /* Màu nền của khối */
+            border: 1px solid #dee2e6; /* Viền khối */
+            border-radius: 8px; /* Bo góc cho khối */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng cho khối */
+            padding: 15px; /* Padding cho khối */
+            text-align: center; /* Căn giữa nội dung trong khối */
+        }
+
+        .product-image img {
+            max-width: 100%; /* Giới hạn chiều rộng hình ảnh */
+            height: auto; /* Tự động điều chỉnh chiều cao */
+            border-radius: 4px; /* Bo góc cho hình ảnh */
+        }
+
+        .product-actions {
+            margin-top: 10px; /* Khoảng cách giữa thông tin sản phẩm và các nút */
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px; /* Kích thước nút */
+            margin: 5px;
+            font-size: 14px;
+            text-decoration: none;
+            color: white; /* Màu chữ */
+            border: none; /* Không có viền */
+            border-radius: 4px; /* Bo góc */
+            transition: background-color 0.3s, transform 0.2s; /* Hiệu ứng chuyển màu và thu phóng */
+        }
+
+        .btn-edit {
+            background-color: #007bff; /* Màu xanh cho nút chỉnh sửa */
+        }
+
+            .btn-edit:hover {
+                background-color: #0056b3; /* Màu nền khi hover */
+            }
+
+        .btn-details {
+            background-color: #28a745; /* Màu xanh lá cho nút chi tiết */
+        }
+
+            .btn-details:hover {
+                background-color: #218838; /* Màu nền khi hover */
+            }
+
+        .btn-delete {
+            background-color: #dc3545; /* Màu đỏ cho nút xóa */
+        }
+
+            .btn-delete:hover {
+                background-color: #c82333; /* Màu nền khi hover */
+            }
+
+        .btn:active {
+            transform: translateY(0); /* Quay về vị trí ban đầu khi nhấn */
+        }
+    </style>
+}

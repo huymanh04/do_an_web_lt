@@ -1,0 +1,165 @@
+﻿
+@using do_an_web.Models
+@using PagedList.Mvc
+
+@model do_an_web.Models.Homemol
+
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* CSS cho container chính */
+    .containera {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Khoảng cách giữa các div */
+    }
+
+    .item {
+        flex: 1 1 calc(25% - 20px); /* 25% chiều rộng mỗi khối trừ đi khoảng cách */
+        max-width: calc(25% - 20px);
+        box-sizing: border-box;
+    }
+
+    .anh-hoa {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .ok1 p {
+        text-align: center;
+        font-size: 18px;
+        margin: 5px 0;
+    }
+
+    .danh-gia-5-sao {
+        text-align: center;
+        font-weight: bold;
+    }
+</style>
+<link href="~/Css/pagelisst.css" rel="stylesheet" />
+<link href="~/Content/huymanh.css" rel="stylesheet" />
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<!-- Carousel Container -->
+<div id="carousel-banner-home" class="carousel slide" data-bs-ride="carousel">
+    <!-- Carousel Inner -->
+    <div class="carousel-inner">
+        <!-- Slide 1 -->
+        <div class="carousel-item">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <a href="#">
+                        <img src="https://tramhoa.com/wp-content/uploads/2020/03/default-website-banner.jpg.webp"
+                             alt="home slider 1" class="img-fluid" width="1355" height="432">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="carousel-item">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <a href="#">
+                        <img src="https://in.flowercorner.vn/uploads/P657fd247737038.75342862.webp"
+                             alt="home slider 2" class="img-fluid" width="1355" height="432">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 3 (Active Slide) -->
+        <div class="carousel-item active">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <a href="#">
+                        <img src="https://in.flowercorner.vn/uploads/P649ea8ef2ed4f0.09844576.webp"
+                             alt="home slider 3" class="img-fluid" width="1355" height="432">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-banner-home" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carousel-banner-home" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<div class="dvd">
+    <div class="title-div" style="
+    height: 70px;
+">
+        <h4 class="shop-page-title is-xlarge">Tất cả sản phẩm của cửa hàng</h4>
+    </div>
+
+    <div class="containeraa">
+        @foreach (var item in Model.ListProduct1)
+        {
+            <div class="item">
+                <div class="ok1">
+                    <a href="@Url.Action("Details", "Products", new { id = item.product_id })">
+                        @if (item.images != null)
+                        {
+                            var base64String = Convert.ToBase64String(item.images);
+                            <img aria-label="@item.product_name" class="anh-hoa" src="data:image/png;base64,@base64String" />
+                        }
+                        <p>@item.product_name</p>
+                    </a>
+                    <div class="danh-gia-5-sao">
+                        <p>@item.price ₫</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Phân trang -->
+    <div class="pagination">
+        @Html.PagedListPager(Model.ListProduct1, page => Url.Action("Index1", new { page = page }))
+    </div>
+</div>
+<div class="row row-small" id="row-852705777"style="margin-left:50px" >
+    <div id="col-1234222721" class="col hide-for-small medium-6 small-12 large-6">
+        <div class="col-inner">
+            <div class="img has-hover x md-x lg-x y md-y lg-y" id="image_2056088073">
+                <a class="" href="  @Url.Action("chinhsachthanhtoan","Home")">
+                    <div class="img-inner box-shadow-1 dark">
+                        <img loading="lazy" decoding="async" width="640" height="210" src="https://tramhoa.com/wp-content/uploads/2019/11/phuong-thuc-thanh-toan.jpg.webp" class="attachment-original size-original" alt="Phương thức thanh toán" srcset="https://tramhoa.com/wp-content/uploads/2019/11/phuong-thuc-thanh-toan.jpg.webp 640w, https://tramhoa.com/wp-content/uploads/2019/11/phuong-thuc-thanh-toan-510x167.jpg.webp 510w, https://tramhoa.com/wp-content/uploads/2019/11/phuong-thuc-thanh-toan-300x98.jpg.webp 300w, https://tramhoa.com/wp-content/uploads/2019/11/phuong-thuc-thanh-toan-150x49.jpg.webp 150w" sizes="(max-width: 640px) 100vw, 640px">
+                    </div>
+                </a>
+                <style>
+                    #image_2056088073 {
+                        width: 100%;
+                    }
+                </style>
+            </div>
+        </div>
+    </div><div id="col-1567047594" class="col medium-6 small-12 large-6">
+        <div class="col-inner">
+            <div class="img has-hover x md-x lg-x y md-y lg-y" id="image_1286391954">
+                <a class="" href="#">
+                    <div class="img-inner box-shadow-1 dark">
+                        <img loading="lazy" decoding="async" width="640" height="210" src="https://tramhoa.com/wp-content/uploads/2019/11/hinh-hoa-tu-khach-hang.jpg.webp" class="attachment-original size-original" alt="Hình hoa thực tế và đánh giá từ khách hàng" srcset="https://tramhoa.com/wp-content/uploads/2019/11/hinh-hoa-tu-khach-hang.jpg.webp 640w, https://tramhoa.com/wp-content/uploads/2019/11/hinh-hoa-tu-khach-hang-510x167.jpg.webp 510w, https://tramhoa.com/wp-content/uploads/2019/11/hinh-hoa-tu-khach-hang-300x98.jpg.webp 300w, https://tramhoa.com/wp-content/uploads/2019/11/hinh-hoa-tu-khach-hang-150x49.jpg.webp 150w" sizes="(max-width: 640px) 100vw, 640px">
+                    </div>
+                </a>
+                <style>
+                    #image_1286391954 {
+                        width: 100%;
+                    }
+                </style>
+            </div>
+        </div>
+    </div>
+</div>

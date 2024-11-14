@@ -1,0 +1,285 @@
+﻿@model do_an_web.Models.Account
+
+@{
+    ViewBag.Title = "Tạo mới account";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.ti = "Tạo thành viên mới";
+}
+<style>
+ /* Cải tiến giao diện form */
+.form-horizontal {
+    margin: 20px auto; /* Căn giữa form */
+    max-width: 600px; /* Giới hạn chiều rộng */
+    padding: 30px; /* Tăng padding để form rộng hơn */
+    border: 1px solid #e0e0e0; /* Sử dụng màu nhạt cho border */
+    border-radius: 12px; /* Góc bo tròn mềm mại */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    background-color: #fafafa; /* Màu nền nhẹ nhàng */
+}
+
+/* Cải tiến kiểu hiển thị của nhóm trường */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Cải tiến label */
+.control-label {
+    flex: 0 0 160px; /* Tăng chiều rộng của label */
+    font-weight: bold;
+    color: #333; /* Màu chữ tối */
+    font-size: 16px;
+}
+
+/* Phần input chứa trong form */
+.input-container {
+    flex: 1; /* Chiếm không gian còn lại */
+    margin-left: 20px; /* Khoảng cách giữa label và input */
+}
+
+/* Cải tiến các input (text, number, file, select) */
+input[type="text"],
+input[type="number"],
+input[type="file"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.3s ease; /* Hiệu ứng thay đổi màu border */
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #5cb85c; /* Thay đổi màu border khi focus */
+}
+
+/* Cải tiến button submit */
+input[type="submit"] {
+    background-color: #5cb85c; /* Màu nền của nút */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px; /* Góc bo tròn */
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease; /* Hiệu ứng khi hover */
+}
+
+input[type="submit"]:hover {
+    background-color: #4cae4c; /* Màu nền khi hover */
+}
+
+/* Thông báo lỗi */
+.text-danger {
+    color: #d9534f; /* Màu đỏ nổi bật cho thông báo lỗi */
+    font-size: 14px;
+}
+
+/* Cải tiến hình ảnh */
+.img-preview {
+    max-width: 150px; /* Giới hạn chiều rộng hình ảnh */
+    height: auto;
+    margin-top: 10px;
+    border-radius: 8px; /* Góc bo tròn cho hình ảnh */
+    border: 2px solid #ddd;
+    padding: 5px;
+}
+
+/* Cải tiến kiểu cho nút quay lại */
+.btn-primary {
+    background-color: #0275d8; /* Màu xanh cho nút quay lại */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    text-align: center;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #025aa5; /* Màu khi hover */
+}
+
+/* Cải tiến phần title form */
+h4 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Tinh chỉnh khoảng cách giữa các nhóm input */
+.form-horizontal hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+    /* Đảm bảo tất cả các trường input có chiều rộng đầy đủ */
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    select,
+    input[type="email"], /* Thêm email */
+    input[type="tel"] { /* Thêm số điện thoại */
+        width: 100%; /* Chiều rộng đầy đủ */
+        padding: 12px; /* Padding cho input */
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #fff;
+        box-sizing: border-box; /* Đảm bảo không bị lệch kích thước */
+        font-size: 16px; /* Đảm bảo font đủ lớn */
+    }
+
+        /* Các trường input khi focus */
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="file"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus {
+            border-color: #5cb85c; /* Màu border khi focus */
+        }
+
+    /* Đảm bảo các trường điện thoại và email không bị nhỏ */
+    .input-container input[type="tel"],
+    .input-container input[type="email"] {
+        width: 100%; /* Đảm bảo chiều rộng đầy đủ */
+        font-size: 16px; /* Font size lớn hơn để dễ nhìn */
+    }
+
+
+    .form-group.text-center .button-container {
+        display: flex;
+        justify-content: center; /* Căn giữa các nút */
+        gap: 15px; /* Khoảng cách giữa các nút */
+    }
+
+    .form-group.text-center .btn {
+        padding: 12px 25px; /* Padding cho nút */
+        border-radius: 5px; /* Góc bo tròn */
+        font-size: 16px; /* Kích thước chữ */
+        font-weight: bold; /* In đậm */
+        text-decoration: none; /* Bỏ dấu gạch chân */
+        display: inline-block;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu nền và hiệu ứng biến đổi khi hover */
+    }
+
+    .form-group.text-center .btn-default {
+        background-color: #28a745; /* Màu nền cho nút Create */
+        color: white; /* Màu chữ trắng */
+        border: none; /* Không viền */
+    }
+
+        .form-group.text-center .btn-default:hover {
+            background-color: #218838; /* Màu nền khi hover */
+            transform: translateY(-2px); /* Hiệu ứng nâng nút lên khi hover */
+        }
+
+    .form-group.text-center .btn-primary {
+        background-color: #007bff; /* Màu nền cho nút Quay lại */
+        color: white; /* Màu chữ trắng */
+        border: none; /* Không viền */
+    }
+
+        .form-group.text-center .btn-primary:hover {
+            background-color: #0056b3; /* Màu nền khi hover */
+            transform: translateY(-2px); /* Hiệu ứng nâng nút lên khi hover */
+        }
+
+        /* Nếu cần, bạn có thể thêm một số kiểu riêng cho ActionLink */
+        .form-group.text-center .btn-primary:focus {
+            outline: none; /* Bỏ viền khi nhấn */
+        }
+
+</style>
+
+
+
+
+@using (Html.BeginForm("Create", "Accounts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Thông tin Người dùng</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group d-flex align-items-center">
+        <label class="control-label mr-2">Tên Khách hàng :</label>
+        <div class="input-container">
+            @Html.EditorFor(model => model.full_name, new { htmlAttributes = new { @class = "form-control w-100" } })
+            @Html.ValidationMessageFor(model => model.full_name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group d-flex align-items-center">
+        <label class="control-label mr-2">Username :</label>
+        <div class="input-container">
+            @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control w-100" } })
+            @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group d-flex align-items-center">
+        <label class="control-label mr-2">Password:</label>
+        <div class="input-container">
+            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control w-100" } })
+            @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group d-flex align-items-center">
+        <label class="control-label mr-2">Email :</label>
+        <div class="input-container">
+            @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control w-100" } })
+            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group d-flex align-items-center">
+        <label class="control-label mr-2">Phone:</label>
+        <div class="input-container">
+            @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control w-100" } })
+            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group d-flex align-items-center">
+        <label class="control-label mr-2">Address:</label>
+        <div class="input-container">
+            @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control w-100" } })
+            @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group d-flex align-items-center">
+        <label class="control-label mr-2">Type (0 hoặc 1):</label>
+        <div class="input-container">
+            @Html.EditorFor(model => model.idtype, new { htmlAttributes = new { @class = "form-control w-100" } })
+            @Html.ValidationMessageFor(model => model.idtype, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group text-center">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="button-container">
+                <input type="submit" value="Create" class="btn btn-default" />
+                @Html.ActionLink("Quay lại", "Quanlythanhvien", "Accounts", null, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

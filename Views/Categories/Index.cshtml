@@ -1,0 +1,101 @@
+﻿@model IEnumerable<do_an_web.Models.Category>
+
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+   
+}
+<style>
+    /* Định dạng bảng */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 16px;
+        text-align: center; /* Căn giữa nội dung bảng */
+    }
+
+        /* Định dạng tiêu đề cột */
+        .table th {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+        }
+
+        /* Định dạng các ô dữ liệu */
+        .table td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+        }
+
+        /* Định dạng hàng khi di chuột qua */
+        .table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Định dạng liên kết trong bảng */
+        .table a {
+            text-decoration: none;
+            color: #007bff; /* Màu xanh cho liên kết */
+        }
+
+            .table a:hover {
+                text-decoration: underline; /* Gạch chân liên kết khi di chuột */
+            }
+
+    /* Định dạng nút "Create New" */
+    a.btn-create {
+        display: inline-block;
+        margin: 10px 0;
+        padding: 10px 15px;
+        background-color: #28a745; /* Màu xanh lá cây */
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+        a.btn-create:hover {
+            background-color: #218838; /* Màu xanh đậm hơn khi di chuột */
+        }
+
+    .btn-edit {
+        color: white;
+        background-color: #007bff; /* Màu xanh cho nút chỉnh sửa */
+    }
+
+        .btn-edit:hover {
+            background-color: #0056b3; /* Màu nền khi hover */
+        }
+</style>
+<h2>Loại sản phẩm</h2>
+
+<p>
+
+    @Html.ActionLink("Tạo loại mới", "Create", null, new { @class = "btn btn-edit" })
+    @Html.ActionLink("Tạo Thể loại mới", "index", "Category1", null, new { @class = "btn btn-edit" })
+    @Html.ActionLink("Tạo Sản phẩm", "index", "Products", null, new { @class = "btn btn-edit" })
+
+</p>
+<table class="table">
+    <tr>
+        <th>loại</th>
+    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.category_name)
+                </td>
+                <td>
+                    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.category_id }) |
+                    @using (Html.BeginForm("Delete", "Categories", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.category_id })
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>

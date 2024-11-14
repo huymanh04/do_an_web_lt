@@ -1,0 +1,75 @@
+﻿
+.dvd {
+    margin: 20px;
+}
+
+
+
+
+
+/*    hoa*/
+.containera {
+    margin-top: 20px;
+    display: flex;
+    flex: 1 1 25%;
+    box-sizing: border-box;
+}
+
+.containeraa {
+    margin-top: 20px;
+    flex-wrap: wrap;
+    display: flex;
+}
+
+@media (max-width: 1200px) {
+    .containera {
+        flex: 1 1 43.33%;
+    }
+}
+
+@media (max-width: 900px) {
+    .containera {
+        flex: 1 1 50%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .containera {
+        flex: 1 1 50%;
+    }
+}
+
+@media (max-width: 600px) {
+    .containera {
+        flex: 1 1 100%;
+    }
+}
+
+.item {
+    text-align: center;
+    position: relative;
+    width: 110px;
+    height: 400px;
+    background-color: #f0f0f0;
+    padding-bottom: 20px;
+    border-radius: 15px;
+    text-align: center;
+    flex: 1; /* Chia đều chiều rộng giữa các thẻ con */
+    margin: 0 10px; /* Khoảng cách giữa các thẻ con */
+}
+
+.ok1 {
+    border-radius: 15px;
+    width: 100%;
+    height: 150px;
+}
+
+
+
+.anh-hoa {
+    margin-bottom: 10px;
+    border-radius: 15px;
+    width: 100%;
+    height: 400px;
+    background-repeat: no-repeat; /* Không lặp lại ảnh nền */
+}

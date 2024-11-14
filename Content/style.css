@@ -1,0 +1,104 @@
+﻿
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.Thong_bao_chao_mung {
+    height: 40px;
+    width: 100%;
+    background-color: #395b38 !important;
+    text-align: center;
+    position: relative;
+    margin-bottom: 0px;
+}
+
+    .Thong_bao_chao_mung h4 {
+        margin: 0;
+        padding: 10px;
+        color: white;
+    }
+
+.delete-btn {
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+    .delete-btn:before {
+        content: "✖";
+        color: #fff;
+        font-size: 20px;
+    }
+
+.logo {
+    height: 80px;
+    width: 320px;
+    margin-left: 80px;
+}
+.div-menu nav{
+    width:100%;
+}
+.div-menu {
+    width: 100%;
+    height: 50px;
+    display: flex;
+}
+
+.center {
+    width: 60%;
+    background-color: white;
+    padding: 10px;
+}
+
+.main, .left, .center, .right {
+    float: left;
+    min-height: 500px;
+    width: 100%;
+}
+/*menu*/
+.dropdown:hover .dropdown-menu {
+    display: block; /* Hiển thị submenu khi hover */
+}
+
+.fa-sharp-duotone {
+    margin-right: 20px;
+}
+
+
+
+.modal-footer {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.thon-tin {
+    box-sizing: border-box;
+}
+
+.text-block {
+    box-sizing: border-box;
+    display: block;
+    float: left;
+    padding-right: 10px;
+}
+
+#menu-menu-policy {
+    list-style: none;
+    padding: 0px;
+}
+
+#menu-menu-policy li {
+        display: block;
+        margin-right: 0px;
+        padding: 5px;
+    }
+
+#menu-menu-policy li a {
+            color: black;
+            text-decoration: none;
+        }
+
+/*hoa nhập khẩu */

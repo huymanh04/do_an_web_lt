@@ -1,0 +1,227 @@
+﻿/* Layout tổng thể */
+.admin-layout {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: linear-gradient(180deg, #34495e, #2c3e50);
+    color: #ecf0f1;
+    padding: 20px;
+    flex-direction: column;
+    position: fixed;
+    height: 100%;
+}
+
+.menu-link {
+    display: block;
+    color: #ecf0f1;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+    .menu-link:hover {
+        background-color: #16a085;
+    }
+
+.logout {
+    margin-top: auto;
+    background-color: #e74c3c;
+    text-align: center;
+    padding: 12px 20px;
+    color: white;
+}
+
+    .logout:hover {
+        background-color: #c0392b;
+    }
+
+/* Content area */
+.content {
+    margin-left: 250px; /* Chừa chỗ cho sidebar */
+    flex: 1;
+    flex-direction: column;
+    background-color: #f8f9fa;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+/* Topbar */
+.topbar {
+    background-color: #f1f2f6;
+    padding: 15px 20px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dfe4ea;
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #2c3e50;
+}
+
+.user-info {
+    align-items: center;
+}
+
+    .user-info .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+/* Main content */
+.main-content {
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Form chỉnh sửa */
+.form-horizontal {
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}
+
+h4 {
+    text-align: center;
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #495057;
+        font-weight: bold;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        font-size: 14px;
+        color: #495057;
+    }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+/* Button group */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Thêm khoảng cách giữa các nút */
+}
+
+.btn-custom {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    flex: 1;
+    text-align: center;
+    min-width: 120px; /* Đảm bảo chiều rộng tối thiểu */
+}
+
+    .btn-custom:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-custom[style*="background-color:palevioletred"] {
+        background-color: palevioletred;
+    }
+
+        .btn-custom[style*="background-color:palevioletred"]:hover {
+            background-color: #c71585;
+        }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+
+    .form-horizontal {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .button-group {
+        flex-direction: column; /* Chuyển thành dọc trên màn hình nhỏ */
+        gap: 5px; /* Khoảng cách giữa các nút khi sắp xếp theo chiều dọc */
+    }
+
+    .btn-custom {
+        flex: none;
+        width: 100%; /* Nút sẽ chiếm toàn bộ chiều rộng */
+    }
+}
+
+hr {
+    margin-bottom: 10px;
+}
+
+h4 {
+    margin-bottom: 10px;
+}
+.button-group {
+    display: flex; /* Hiển thị các nút ngang */
+    justify-content: space-between; /* Đảm bảo các nút cách đều nhau */
+    gap: 10px; /* Khoảng cách giữa các nút */
+}
+
+.btn-custom {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    flex: 1;
+    text-align: center;
+    min-width: 120px; /* Đảm bảo chiều rộng tối thiểu cho nút */
+}
+
+    .btn-custom:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-custom[style*="background-color:palevioletred"] {
+        background-color: palevioletred;
+    }
+
+        .btn-custom[style*="background-color:palevioletred"]:hover {
+            background-color: #c71585;
+        }

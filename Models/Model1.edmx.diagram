@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fa17c567835040c388512004d351e998" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_shopbanhoaModel.Account" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_shopbanhoaModel.Cart" Width="1.5" PointX="5.25" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_shopbanhoaModel.CartItem" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_shopbanhoaModel.Category" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_shopbanhoaModel.Category1" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_shopbanhoaModel.OrderItem" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_shopbanhoaModel.Order" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_shopbanhoaModel.Product" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <AssociationConnector Association="DB_shopbanhoaModel.FK__Cart__account_id__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_shopbanhoaModel.FK__Orders__account___31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_shopbanhoaModel.FK__CartItem__cart_i__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_shopbanhoaModel.FK__CartItem__produc__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_shopbanhoaModel.FK__Category__catego__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_shopbanhoaModel.FK__Product__categor__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_shopbanhoaModel.FK__Product__company__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_shopbanhoaModel.FK__OrderItem__order__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_shopbanhoaModel.FK__OrderItem__produ__35BCFE0A" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

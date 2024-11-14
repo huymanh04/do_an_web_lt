@@ -1,0 +1,193 @@
+﻿@model do_an_web.Models.Product
+
+@{
+    ViewBag.Title = "Thêm sản phẩm mới";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";ViewBag.ti = "Thêm Mới Sản Phẩm";
+}
+<style>
+
+    .form-horizontal {
+        margin: 20px auto; /* Căn giữa form */
+        max-width: 600px; /* Giới hạn chiều rộng */
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px; /* Góc bo tròn */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho form */
+        background-color: white; /* Màu nền */
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        display: flex; /* Sử dụng Flexbox */
+        align-items: center; /* Căn giữa theo chiều dọc */
+    }
+
+    .control-label {
+        flex: 0 0 150px; /* Chiều rộng cố định cho label */
+        font-weight: bold; /* In đậm */
+    }
+
+    .input-container {
+        flex: 1; /* Chiếm không gian còn lại */
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    select {
+        width: 100%; /* Chiều rộng 100% */
+        padding: 10px; /* Padding cho input */
+        border: 1px solid #ccc;
+        border-radius: 4px; /* Góc bo tròn */
+        box-sizing: border-box; /* Bao gồm padding và border trong tổng chiều rộng */
+    }
+
+    input[type="submit"] {
+        background-color: #5cb85c; /* Màu nền của nút */
+        color: white; /* Màu chữ */
+        border: none; /* Không có viền */
+        padding: 10px 15px; /* Padding cho nút */
+        border-radius: 4px; /* Góc bo tròn */
+        cursor: pointer; /* Con trỏ chuột khi hover */
+    }
+
+        input[type="submit"]:hover {
+            background-color: #4cae4c; /* Màu nền khi hover */
+        }
+
+    .text-danger {
+        color: red; /* Màu chữ cho thông báo lỗi */
+    }
+
+    /* Hình ảnh sản phẩm */
+    .img-preview {
+        max-width: 100px; /* Giới hạn chiều rộng hình ảnh */
+        margin-top: 10px; /* Khoảng cách phía trên */
+    }
+
+    /* Tạo flexbox để căn chỉnh các nút nằm ngang */
+    .button-group {
+        display: flex;
+        justify-content: flex-start; /* Các nút căn theo chiều ngang */
+        gap: 10px; /* Khoảng cách giữa các nút */
+    }
+
+        /* Đảm bảo các nút có chiều rộng giống nhau và căn giữa */
+        .button-group input,
+        .button-group a {
+            display: inline-block;
+            width: auto; /* Cho phép các nút co giãn vừa vặn */
+            height: 40px; /* Đặt chiều cao để nút có kích thước giống nhau */
+            line-height: 40px; /* Căn giữa nội dung trong nút */
+            padding: 0 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+    /* Kiểu dáng cho nút primary và secondary */
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    /* Đảm bảo input có chiều rộng đầy đủ */
+    .form-control.w-100 {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+
+</style>
+<link href="~/Content/caratepr.css" rel="stylesheet" />
+<h2>Thông tin sản phẩm</h2>
+
+
+@using (Html.BeginForm("Create", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    <hr style="
+    margin-bottom: 10px;
+" />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group d-flex align-items-center">
+        <label class="control-label mr-2">Tên sản phẩm:</label>
+        <div class="input-container">
+            @Html.EditorFor(model => model.product_name, new { htmlAttributes = new { @class = "form-control w-100" } })
+            @Html.ValidationMessageFor(model => model.product_name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group d-flex align-items-center">
+        <label class="control-label mr-2">Giá:</label>
+        <div class="input-container">
+            @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control w-100" } })
+            @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group d-flex align-items-center">
+        <label class="control-label mr-2">Miêu tả:</label>
+        <div class="input-container">
+            @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control w-100" } })
+            @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group d-flex align-items-center">
+        <label class="control-label mr-2">Thể loại:</label>
+        <div class="input-container">
+            @Html.DropDownList("company_id", null, new { htmlAttributes = new { @class = "form-control-dropdown" } })
+            @Html.ValidationMessageFor(model => model.company_id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group d-flex align-items-center">
+        <label class="control-label mr-2">Loại:</label>
+        <div class="input-container">
+            @Html.DropDownList("category_id", null, new { htmlAttributes = new { @class = "form-control-dropdown" } })
+            @Html.ValidationMessageFor(model => model.company_id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group d-flex align-items-center">
+        <label class="control-label mr-2">Hình ảnh:</label>
+        <div class="input-container">
+            <input type="file" id="imageFile" name="imageFile" accept="image/*" />
+            @Html.ValidationMessageFor(model => model.images, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group text-center">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="button-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary ml-2" })
+            </div>
+        </div>
+    </div>
+
+
+</div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

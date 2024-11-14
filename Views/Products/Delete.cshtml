@@ -1,0 +1,153 @@
+﻿@model do_an_web.Models.Product
+
+@{
+    ViewBag.Title = "Xóa sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 20px;
+    }
+
+    .product-container {
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .product-info dt {
+        font-weight: bold;
+    }
+
+    .form-actions {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 14px;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-delete {
+        background-color: #dc3545; /* Màu đỏ cho nút xóa */
+    }
+
+        .btn-delete:hover {
+            background-color: #c82333; /* Màu nền khi hover */
+        }
+
+    .btn-back {
+        background-color: #007bff; /* Màu xanh cho nút quay lại */
+    }
+
+        .btn-back:hover {
+            background-color: #0056b3; /* Màu nền khi hover */
+        }
+</style>
+
+<div class="product-details">
+    <div class="image-container">
+
+        @if (Model.images != null)
+        {
+            var base64Image = Convert.ToBase64String(Model.images); // Chuyển đổi byte[] thành base64
+            <img src="data:image/jpeg;base64,@base64Image" alt="Hình ảnh sản phẩm" class="product-image" />
+        }
+    </div>
+
+    <div class="info-container">
+        <h2>Chi tiết sản phẩm muốn xóa</h2>
+        <h4>@Html.DisplayFor(model => model.product_name)</h4>
+        <p class="price">Giá: @Html.DisplayFor(model => model.price)</p>
+        <p class="description">Miêu tả: @Html.DisplayFor(model => model.description)</p>
+        <p class="category">Thể loại: @Html.DisplayFor(model => model.Category.category_name)</p>
+        <p class="company">Công ty: @Html.DisplayFor(model => model.Category1.company_name)</p>
+        <p>
+            <div class="text-center">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Xóa" class="btn btn-delete" />
+                        @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-back" })
+                    </div>
+                }
+            </div>
+        </p>
+    </div>
+</div>
+
+
+
+@section Styles {
+    <style>
+        .btn {
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .product-details {
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-container {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .product-image {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        .info-container {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .info-container h4 {
+                margin: 0 0 10px 0;
+                color: #4a90e2;
+            }
+
+        .price {
+            font-weight: bold;
+            color: #d9534f;
+        }
+
+        .stock,
+        .description,
+        .category,
+        .company {
+            margin: 5px 0;
+        }
+    </style>
+}
+
+
+

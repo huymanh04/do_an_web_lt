@@ -1,0 +1,28 @@
+﻿.text-center {
+    text-align: center; /* Căn giữa nội dung */
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Căn trái các nhãn */
+    margin-bottom: 15px;
+}
+
+.btn-default {
+    background-color: #4a90e2;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    width: 100%; /* Đảm bảo nút chiếm toàn bộ chiều rộng */
+    max-width: 200px; /* Chiều rộng tối đa cho nút */
+}
+
+@media (max-width: 768px) {
+    .btn-default {
+        width: auto; /* Để nút tự động điều chỉnh chiều rộng trên điện thoại */
+    }
+}

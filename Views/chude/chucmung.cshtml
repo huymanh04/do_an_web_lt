@@ -1,0 +1,86 @@
+﻿@model do_an_web.Models.Homemol
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Hoa chúc mừng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* CSS cho container chính */
+    .containera {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Khoảng cách giữa các div */
+    }
+
+    .item {
+        flex: 1 1 calc(25% - 20px); /* 25% chiều rộng mỗi khối trừ đi khoảng cách */
+        max-width: calc(25% - 20px);
+        box-sizing: border-box;
+    }
+
+
+    /* Đảm bảo ảnh và các thành phần bên trong được căn chỉnh */
+    .anh-hoa {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Đảm bảo tiêu đề và giá cả hiển thị ở giữa */
+    .ok1 p {
+        text-align: center;
+        font-size: 18px;
+        margin: 5px 0;
+    }
+
+    .danh-gia-5-sao {
+        text-align: center;
+        font-weight: bold;
+    }
+</style>
+<link href="~/Content/huymanh.css" rel="stylesheet" />
+<link href="~/Css/pagelisst.css" rel="stylesheet" />
+<div class="dvd">
+
+    <div class="title-div">
+        <h4 class="shop-page-title is-xlarge">Hoa Để bàn</h4>
+        <div class="is-smaller">
+            <nav>
+                <p>
+                     @Html.ActionLink("Trang chủ", "Index1", "Products", null, new { @class = "nav-link_dropdown-toggleea" })
+                    <span class="separator"> » </span>
+                    <span class="last">Chủ đề</span>
+                </p>
+            </nav>
+        </div>
+    </div>
+    @*hàng thứ 2*@
+    <div class="containeraa">
+        <div class="containera">
+            @foreach (var item in Model.ListProduct1)
+            {
+                {
+                    <div class="item">
+                        <div class="ok1">
+                            <a href="@Url.Action("Details", "Products", new { id = item.product_id })">
+                                @if (item.images != null)
+                                {
+                                    var base64String = Convert.ToBase64String(item.images);
+                                    <img aria-label="@item.product_name" class="anh-hoa" src="data:image/png;base64,@base64String" />
+                                }
+                                <p>@item.product_name</p>
+                            </a>
+
+                            <div class="danh-gia-5-sao">
+                                <p>@item.price ₫</p>
+                            </div>
+                        </div>
+                    </div>}
+            }
+        </div>
+    </div>
+</div>
+<div class="pagination">
+    @Html.PagedListPager(Model.ListProduct1, page => Url.Action("chucmung", new { page = page }))
+</div>

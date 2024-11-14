@@ -1,0 +1,149 @@
+﻿@model do_an_web.Models.Product
+
+@{
+    ViewBag.Title = "chi tiết sản phẩm";
+    if (ViewBag.admin == null)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        ViewBag.Title = "Trang Admin";
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+        ViewBag.ti = "Chi tiết sản phẩm";
+    }
+}
+@if (ViewBag.admin != null)
+{
+<style>
+    * Button group */
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px; /* Thêm khoảng cách giữa các nút */
+    }
+
+    .btn-custom {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 14px;
+        flex: 1;
+        text-align: center;
+        text-decoration: none; min-width: 120px; /* Đảm bảo chiều rộng tối thiểu */
+    }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-custom[style*="background-color:palevioletred"] {
+            background-color: palevioletred;
+        }
+
+            .btn-custom[style*="background-color:palevioletred"]:hover {
+                background-color: #c71585;
+            }
+    </style>
+}
+
+
+<div class="product-details">
+    <div class="image-container">
+
+        @if (Model.images != null)
+        {
+            var base64Image = Convert.ToBase64String(Model.images); // Chuyển đổi byte[] thành base64
+            <img src="data:image/jpeg;base64,@base64Image" alt="Hình ảnh sản phẩm" class="product-image" />
+        }
+    </div>
+
+    <div class="info-container">
+        <h2>Chi tiết sản phẩm</h2>
+        <h4>@Html.DisplayFor(model => model.product_name)</h4>
+        <p class="price">Giá: @Html.DisplayFor(model => model.price)</p>
+
+        <p class="description">Miêu tả: @Html.DisplayFor(model => model.description)</p>
+        <p class="category">Thể loại: @Html.DisplayFor(model => model.Category1.company_name)</p>
+        <p class="company">Loại: @Html.DisplayFor(model => model.Category.category_name)</p>
+        <p>
+            <div class="text-center">
+                @if (ViewBag.admin != null)
+                {
+                    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.product_id }, new { @class = "btn-custom", @style = "margin-right: 10px;" })
+                    @Html.ActionLink("Quay lại", "GoBack", "hoasinhnhat", new { id = Model.product_id }, new { @class = "btn-custom", @style = "margin-left: 10px;" })
+                }
+                else
+                { 
+                    <a href="~/ShoppingCart/AddToCart/@Model.product_id" class="btn btn-danger"> Mua </a>
+ @Html.ActionLink("Quay lại", "GoBack", "hoasinhnhat", new { id = Model.product_id }, new { @class = "btn btn-primary", @style = "margin-right: 10px;" })
+                }
+            </div>
+    </p>
+
+    </div>
+</div>
+
+
+
+@section Styles {
+    <style>
+        .inputsl{
+            width:50px;
+        }
+        .btn {
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .product-details {
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-container {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .product-image {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        .info-container {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .info-container h4 {
+                margin: 0 0 10px 0;
+                color: #4a90e2;
+            }
+
+        .price {
+            font-weight: bold;
+            color: #d9534f;
+        }
+
+        .stock,
+        .description,
+        .category,
+        .company {
+            margin: 5px 0;
+        }
+    </style>
+}

@@ -1,0 +1,74 @@
+CREATE TABLE [dbo].[Category1] (
+    [category1_id] INT PRIMARY KEY IDENTITY(1,1),  -- Sửa tên trường khóa chính để phù hợp với bảng Category
+    [company_name] NVARCHAR(255) NOT NULL          -- Đổi VARCHAR thành NVARCHAR
+);
+CREATE TABLE [dbo].[Category] (
+    [category_id] INT PRIMARY KEY IDENTITY(1,1),
+    [category_name] NVARCHAR(100) NOT NULL,       -- Đổi VARCHAR thành NVARCHAR
+    [category1_id] INT,
+    FOREIGN KEY ([category1_id]) REFERENCES [dbo].[Category1]([category1_id]) ON DELETE NO ACTION  -- Chỉnh sửa
+);
+-- Bảng Thể loại sản phẩm (Category)
+
+-- Bảng Sản phẩm (Product)
+CREATE TABLE [dbo].[Product] (
+    [product_id] INT PRIMARY KEY IDENTITY(1,1),
+    [product_name] NVARCHAR(255) NOT NULL,        -- Đổi VARCHAR thành NVARCHAR
+    [price] DECIMAL(10, 2) NOT NULL,
+    [description] NVARCHAR(MAX),                   -- Đổi TEXT thành NVARCHAR(MAX)
+    [company_id] INT,
+    [category_id] INT,
+    [images] VARBINARY(MAX),
+    FOREIGN KEY ([company_id]) REFERENCES [dbo].[Category1]([category1_id]) ON DELETE NO ACTION,  -- Chỉnh sửa
+    FOREIGN KEY ([category_id]) REFERENCES [dbo].[Category]([category_id]) ON DELETE NO ACTION  -- Chỉnh sửa
+);
+
+-- Bảng Tài khoản người dùng (Account) chứa thông tin khách hàng
+CREATE TABLE [dbo].[Account] (
+    [account_id] INT PRIMARY KEY IDENTITY(1,1),  -- ID của tài khoản
+    [username] NVARCHAR(50) NOT NULL UNIQUE, -- Đổi VARCHAR thành NVARCHAR
+	[idtype] int,--set mặc định là 1 là khách 0 là admin
+    [password] NVARCHAR(255) NOT NULL,            -- Đổi VARCHAR thành NVARCHAR
+    [full_name] NVARCHAR(100),                     -- Đổi VARCHAR thành NVARCHAR
+    [email] NVARCHAR(100),                         -- Đổi VARCHAR thành NVARCHAR
+    [phone] NVARCHAR(20),                          -- Đổi VARCHAR thành NVARCHAR
+    [address] NVARCHAR(255)                        -- Đổi VARCHAR thành NVARCHAR
+);
+
+-- Bảng Đơn hàng (Orders) chứa thông tin đơn hàng của khách
+CREATE TABLE [dbo].[Orders] (
+    [order_id] INT PRIMARY KEY IDENTITY(1,1),    -- ID của đơn hàng
+    [account_id] INT,                            -- ID của tài khoản
+    [order_date] DATETIME DEFAULT CURRENT_TIMESTAMP,  -- Ngày đặt hàng
+    [total_amount] DECIMAL(10, 2) NOT NULL,      -- Tổng số tiền
+    [status] NVARCHAR(50) DEFAULT 'Pending',      -- Đổi VARCHAR thành NVARCHAR
+    FOREIGN KEY ([account_id]) REFERENCES [dbo].[Account]([account_id]) ON DELETE NO ACTION  -- Chỉnh sửa
+);
+
+-- Bảng Chi tiết đơn hàng (OrderItem) lưu các sản phẩm trong mỗi đơn hàng
+CREATE TABLE [dbo].[OrderItem] (
+    [order_item_id] INT PRIMARY KEY IDENTITY(1,1), -- ID của chi tiết đơn hàng
+    [order_id] INT,                                 -- ID của đơn hàng
+    [product_id] INT,                               -- ID của sản phẩm
+    [quantity] INT NOT NULL,                        -- Số lượng sản phẩm trong đơn hàng
+    [price] DECIMAL(10, 2) NOT NULL,               -- Giá sản phẩm tại thời điểm đặt hàng
+    FOREIGN KEY ([order_id]) REFERENCES [dbo].[Orders]([order_id]) ON DELETE NO ACTION,  -- Chỉnh sửa
+    FOREIGN KEY ([product_id]) REFERENCES [dbo].[Product]([product_id]) ON DELETE NO ACTION  -- Chỉnh sửa
+);
+
+-- Bảng Giỏ hàng (Cart) chứa các sản phẩm mà khách hàng thêm vào giỏ hàng
+CREATE TABLE [dbo].[Cart] (
+    [cart_id] INT PRIMARY KEY IDENTITY(1,1),      -- ID của giỏ hàng
+    [account_id] INT,                             -- ID của tài khoản
+    FOREIGN KEY ([account_id]) REFERENCES [dbo].[Account]([account_id]) ON DELETE NO ACTION  -- Chỉnh sửa
+);
+
+-- Bảng Chi tiết giỏ hàng (CartItem) lưu các sản phẩm trong mỗi giỏ hàng
+CREATE TABLE [dbo].[CartItem] (
+    [cart_item_id] INT PRIMARY KEY IDENTITY(1,1), -- ID của chi tiết giỏ hàng
+    [cart_id] INT,                                 -- ID của giỏ hàng
+    [product_id] INT,                              -- ID của sản phẩm
+    [quantity] INT NOT NULL,                       -- Số lượng sản phẩm trong giỏ hàng
+    FOREIGN KEY ([cart_id]) REFERENCES [dbo].[Cart]([cart_id]) ON DELETE NO ACTION,  -- Chỉnh sửa
+    FOREIGN KEY ([product_id]) REFERENCES [dbo].[Product]([product_id]) ON DELETE NO ACTION  -- Chỉnh sửa
+);
