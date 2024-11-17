@@ -40,11 +40,10 @@ else
                         </td>
                         <td class="text-right">@String.Format("{0:N0}", @item._product.price) ₫</td>
                         <td class="text-right">
-                            @using (Html.BeginForm("Update_Cart_Quantity", "ShoppingCart"))
+                            @using (Html.BeginForm("Update_Cart_Quantity", "ShoppingCart", FormMethod.Post))
                             {
                                 <input type="hidden" value="@item._product.product_id" name="idPro" />
-                                <input type="number" value="@item._quantity" name="carQuantity" class="quantity-input" />
-                                <input type="submit" value="Cập nhật" class="btn-update" />
+                                <input type="number" value="@item._quantity" name="carQuantity" class="quantity-input" onchange="this.form.submit();" />
                             }
                         </td>
                         <td class="text-right">@String.Format("{0:N0}", Model.Total_money()) ₫</td>
@@ -79,13 +78,11 @@ else
                             </div>
                             <!-- Thẻ thông báo tràn -->
                             <div id="qr-toast" class="qr-toast" style="display:none;">
-                                <h3>Mã Qr thanh toán</h3>
-                                <h4>Số tiền bạn phải toán toán là : @String.Format("{0:N0}", @Model.Total_money()) ₫</h4>
+                                <h3>Mã QR thanh toán</h3>
+                                <h4>Số tiền bạn phải thanh toán là: @String.Format("{0:N0}", @Model.Total_money()) ₫</h4>
                                 <div id="qr-content">
-                                    <!-- Mã QR sẽ được chèn vào đây -->
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYI1P1wilnPGipgRK_6QMc_vK6hVfFYnWVPQ&s" alt="QR Code" />
+
                                 </div>
-                                <!-- Nút đóng để tắt QR -->
                                 <button type="button" id="close-toast" onclick="closeToast()">X</button>
                             </div>
 
@@ -99,26 +96,48 @@ else
         </table>
 
         <script>
-            // Lắng nghe sự thay đổi của select box
-            document.getElementById("pay").addEventListener("change", function () {
-                var payMethod = this.value;
-                var qrToast = document.getElementById("qr-toast");
-
-                // Hiển thị thẻ thông báo tràn nếu chọn "Thanh toán online"
-                if (payMethod === "Thanh toán online") {
-                    qrToast.style.display = "block";
-                    // Tự động ẩn thẻ sau 10 giây (hoặc thời gian bạn muốn)
-                    setTimeout(closeToast, 10000);  // 10 giây
-                } else {
-                    qrToast.style.display = "none";
+    document.getElementById("pay").addEventListener("change", function () {
+        var payMethod = this.value;
+        var qrToast = document.getElementById("qr-toast");
+ 
+     
+        // Nếu chọn "Thanh toán online", gửi Ajax request để tạo mã QR
+        if (payMethod === "Thanh toán online") {
+            // Gửi yêu cầu Ajax đến controller để tạo mã QR
+            $.ajax({
+                url: '@Url.Action("Create", "autobank")',
+                type: 'GET',
+                data: {
+                    amount: @Model.Total_money(),  // Truyền số tiền từ model
+                    content: 'thanh toan hoa'        // Truyền content từ ViewBag.use
+                },
+                
+                success: function (data) {
+                    // Kiểm tra nếu trả về mã QR
+                    if (data.success && data.qrCodeImage) {
+                        // Hiển thị mã QR
+                        qrToast.style.display = "block";
+                        document.getElementById("qr-content").innerHTML = '<img src="data:image/png;base64,' + data.qrCodeImage + '" alt="QR Code"style="width: 30%"/>';
+                    } else {
+                       
+                        alert("Không thể tạo mã QR.");
+                    }
+                    // Tự động ẩn thẻ sau 20 giây
+                    setTimeout(closeToast, 20000);  // 20 giây
+                },
+                error: function () {
+                    alert('Lỗi tạo mã QR.');
                 }
             });
+        } else {
+            qrToast.style.display = "none";
+        }
+    });
 
-            // Hàm đóng thẻ thông báo
-            function closeToast() {
-                document.getElementById("qr-toast").style.display = "none";
-
-            }
+    // Hàm đóng thẻ thông báo
+    function closeToast() {
+        document.getElementById("qr-toast").style.display = "none";
+    }
         </script>
 
 
