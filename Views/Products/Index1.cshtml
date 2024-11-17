@@ -104,23 +104,28 @@
         <h4 class="shop-page-title is-xlarge">Tất cả sản phẩm của cửa hàng</h4>
     </div>
 
-    <div class="containeraa">
-        @foreach (var item in Model.ListProduct1)
+    <div class="containerasa">
+        @for (int i = 0; i < Model.ListProduct1.Count; i += 4)
         {
-            <div class="item">
-                <div class="ok1">
-                    <a href="@Url.Action("Details", "Products", new { id = item.product_id })">
-                        @if (item.images != null)
-                        {
-                            var base64String = Convert.ToBase64String(item.images);
-                            <img aria-label="@item.product_name" class="anh-hoa" src="data:image/png;base64,@base64String" />
-                        }
-                        <p>@item.product_name</p>
-                    </a>
-                    <div class="danh-gia-5-sao">
-                        <p>@String.Format("{0:N0}", item.price) ₫</p>
+            <div class="containeraa">
+                @foreach (var item in Model.ListProduct1.Skip(i).Take(4))
+                {
+                    <div class="item">
+                        <div class="ok1">
+                            <a href="@Url.Action("Details", "Products", new { id = item.product_id })">
+                                @if (item.images != null)
+                                {
+                                    var base64String = Convert.ToBase64String(item.images);
+                                    <img aria-label="@item.product_name" class="anh-hoa" src="data:image/png;base64,@base64String" />
+                                }
+                                <p>@item.product_name</p>
+                            </a>
+                            <div class="danh-gia-5-sao">
+                                <p>@String.Format("{0:N0}", item.price) ₫</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                }
             </div>
         }
     </div>
@@ -162,4 +167,45 @@
             </div>
         </div>
     </div>
+    
+    <h3 style="text-align:center;margin-top:15px">Giới thiệu về Tiệm Hoa 5 Anh Em Siêu Nhân</h3>
+
+    <section class="section" id="section_427190754" style="margin-top:15px; width:98%">
+        <div class="section-bg fill"></div><div class="section-content relative">
+            <div class="row row-divided" id="row-1818285770">
+                <div id="col-1512502949" class="col medium-6 small-12 large-6">
+                    <div class="col-inner">
+                        <div id="text-1443142437" class="text homepage-about">
+                            <h1>Tiệm hoa 5 anh em siêu nhân</h1><p>5 anh em siêu nhân là <strong>shop hoa tươi</strong> hỗ trợ khách hàng <strong>đặt hoa online</strong>, giao tận nơi miễn phí khu vực nội thành. Tuy chỉ vừa hoạt động một thời gian ngắn nhưng 5 Anh Em đã được nhiều đơn vị lớn tin tưởng và đặt hoa mỗi ngày. Trong năm vừa qua, 5 Anh Em đã phục vụ thành công hơn <strong>5000+</strong> đơn hàng điện hoa toàn quốc.</p><h2>Đặt hoa online, giao hoa tận nơi</h2><p>Việc gửi tặng hoa trở nên vô cùng đơn giản khi 5 Anh Em cung cấp công cụ giúp khách hàng có thể thực hiện thao tác <a href="https://tramhoa.com/"><strong>đặt hoa online</strong></a> trực tiếp trên website một cách dễ dàng. Ngoài ra, quý khách còn có thể đặt hoa thông qua hotline <a href="tel:+84348278722"><strong>034 827 8722</strong></a>, nhân viên tư vấn sẽ hỗ trợ khách hàng một cách nhanh nhất. Đơn hàng sẽ được thực hiện khi được nhân viên xác nhận thông tin đơn hàng với khách hàng. Sau khi hoàn thành sản phẩm, Nhân viên giao hàng sẽ <strong>giao hoa tận nơi</strong>, trao tận tay người nhận.</p><h2>Dịch vụ giao hoa trong ngày</h2><p>Shop qua tươi 5 Anh Em luôn sẵn sàng lắng nghe nhu cầu của khách hàng. Chúng tôi đảm bảo có thể <strong>giao hoa</strong> tươi <strong>trong ngày</strong> theo yêu cầu của bạn. Bạn trót quên ngày kỉ niệm quan trọng, bạn lỡ quên mua hoa chúc mừng mà thời gian đã gần kề, đừng lo 5 Anh Em sẽ giúp bạn giải quyết vấn đề nan giải này. Dù trong hoàn cảnh nào, <b>shop hoa tươi </b>chúng tôi luôn đảm bảo giao đúng, đủ và chất lượng.</p>
+                            <style>
+                                #text-1443142437 {
+                                    font-size: 0.8rem;
+                                    text-align: left;
+                                }
+                            </style>
+                        </div>
+                    </div>
+                </div><div id="col-1060454058" class="col medium-6 small-12 large-6">
+                    <div class="col-inner">
+                        <div id="text-1353662038" class="text homepage-about">
+                            <h2>Dịch vụ điện hoa toàn quốc</h2><p>Với hệ thống chi nhánh cửa hàng hoa tươi liên kết trên toàn quốc, 5 Anh Em cung cấp dịch vụ <a href="https://tramhoa.com/dien-hoa/"><strong>điện hoa toàn quốc</strong></a> cho quý khách hàng cá nhân và doanh nghiệp. Nếu quý khách có nhu cầu <strong>gửi tặng hoa</strong> cho người nhận, 5 Anh Em sẽ tư vấn cho khách hàng những mẫu <strong>hoa tươi</strong> phù hợp nhất cho mỗi dịp, lễ trong năm. Sản phẩm sẽ được thực hiện bởi những thợ cắm hoa lành nghề nhất tại khu vực bạn muốn giao hoa. <strong>5 Anh Em</strong> cam kết giao hàng đúng hẹn và bảo đảm rằng mỗi sản phẩm đều đạt được tiêu chuẩn cao nhất.</p><h2>Sản phẩm hoa tươi cung cấp tại 5 Anh Em</h2><p>Tại <strong>5 Anh Em</strong>, khách hàng có thể tìm thấy rất nhiều loại hoa khác nhau. Những loại hoa có thể được kết hợp với nhau tạo nên nhiều mẫu mã đa dạng, mới mẻ và độc đáo, phù hợp trong nhiều hoàn cảnh khác nhau. Hoa tại 5 Anh Em luôn giữ được độ tươi mới có nguồn gốc, xuất xứ rõ ràng. Những nhành hoa được lựa chọn cẩn thận để tạo ra những sản phẩm hoàn hảo nhất có thể.</p><p>Nhờ vào nguồn hoa tươi dồi dào, phong phú và thợ cắm hoa lành nghề, 5 Anh Em cung cấp sản phẩm hoa tươi phù hợp với mọi dịp trong năm như: <a href="https://tramhoa.com/hoa-sinh-nhat/">Hoa sinh nhật</a>, <a href="https://tramhoa.com/hoa-khai-truong/">Hoa khai trương</a>, <a href="https://tramhoa.com/hoa-chia-buon/">Hoa chia buồn đám tang</a>, <a href="https://tramhoa.com/hoa-chuc-mung-le-tot-nghiep/">Hoa chúc mừng tốt nghiệp</a>, <a href="https://tramhoa.com/hoa-cau-hon/" target="_blank" rel="nofollow noopener">Hoa cầu hôn</a>,… Hoa tươi thành phẩm cũng được hoàn thiện theo nhiều kiểu dáng, thiết kế khác nhau như: <a href="https://tramhoa.com/bo-hoa-tuoi/">Bó hoa</a>, <a href="https://tramhoa.com/gio-hoa-tuoi/" data-wplink-edit="true">Giỏ hoa</a>, <a href="https://tramhoa.com/lang-hoa-de-ban/">Lẵng hoa để bàn</a>, <a href="https://tramhoa.com/ke-hoa-chuc-mung/">Kệ hoa chúc mừng</a>,…</p>
+                            <style>
+                                #text-1353662038 {
+                                    font-size: 0.8rem;
+                                    text-align: left;
+                                }
+                            </style>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <style>
+            #section_427190754 {
+                padding-top: 40px;
+                padding-bottom: 40px;
+                background-color: rgb(242, 242, 242);
+            }
+        </style>
+    </section>
 </div>

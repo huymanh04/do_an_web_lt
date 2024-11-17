@@ -60,7 +60,7 @@ namespace do_an_web.Controllers
         public ActionResult Index1(  int? page)
         {
 
-            int pageSize = 4; // Số bản ghi trên mỗi trang
+            int pageSize = 8; // Số bản ghi trên mỗi trang
             int pageNumber = (page ?? 1); // Trang hiện tại, mặc định là trang 1
 
             // Khởi tạo đối tượng Homemol và lấy dữ liệu từ ListProduct
