@@ -1,0 +1,75 @@
+﻿/* Bảng lịch sử mua hàng */
+.table {
+    width: 100%;
+    margin: 20px auto;
+    border-radius: 8px; /* Bo góc cho bảng */
+    overflow: hidden;
+    background-color: #ffffff; /* Màu nền trắng */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ cho bảng */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 1px solid #ddd; /* Đường viền nhẹ cho bảng */
+}
+
+    .table th, .table td {
+        padding: 15px 20px;
+        text-align: left;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .table th {
+        background-color: #4CAF50; /* Màu nền tiêu đề bảng */
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase; /* Chữ in hoa cho tiêu đề */
+    }
+
+    .table tr:nth-child(even) {
+        background-color: #f2f2f2; /* Màu nền cho các hàng chẵn */
+    }
+
+    .table tr:hover {
+        background-color: #e0e0e0; /* Màu nền khi di chuột qua hàng */
+        cursor: pointer; /* Thay đổi con trỏ khi di chuột */
+    }
+
+    .table td {
+        font-size: 14px;
+    }
+
+    /* Định dạng cho cột giá tiền */
+    .table .price {
+        font-weight: bold;
+        color: #e74c3c; /* Màu đỏ cho giá trị tiền tệ */
+    }
+
+    /* Định dạng cho cột ngày đặt hàng */
+    .table td:nth-child(4) {
+        color: #7f8c8d;
+    }
+
+    /* Định dạng cho cột trạng thái đơn hàng */
+    .table td:last-child {
+        font-weight: bold;
+        color: #3498db; /* Màu xanh cho trạng thái */
+    }
+
+/* Định dạng cho tiêu đề bảng */
+h2 {
+    font-size: 30px;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+/* Định dạng cho bảng trong phiên bản di động */
+@media screen and (max-width: 768px) {
+    .table th, .table td {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+}

@@ -1,0 +1,77 @@
+﻿body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa; /* Màu nền sáng */
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto; /* Căn giữa nội dung */
+}
+
+.stat {
+    background: #ffffff; /* Màu nền trắng */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .stat:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat h3 {
+        font-size: 20px;
+        color: #333333; /* Màu tiêu đề đậm */
+        margin-bottom: 15px;
+    }
+
+    .stat p {
+        font-size: 24px;
+        font-weight: bold;
+        color: #007bff; /* Màu xanh nổi bật */
+        margin: 10px 0;
+    }
+
+    .stat a {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 15px;
+        font-size: 14px;
+        color: #ffffff;
+        background-color: #007bff;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+        .stat a:hover {
+            background-color: #0056b3;
+        }
+
+.chart-container-wrapper {
+    display: flex; /* Sử dụng Flexbox để xếp các phần tử con ngang hàng */
+    gap: 20px; /* Khoảng cách giữa các biểu đồ */
+    margin-top: 30px;
+    justify-content: space-between; /* Đảm bảo các phần tử được phân bố đều trong không gian */
+}
+
+.chart-container {
+    flex: 0 1 calc(25% - 20px); /* Mỗi biểu đồ chiếm 25% chiều rộng của dòng */
+    max-width: 25%; /* Giới hạn chiều rộng tối đa của mỗi biểu đồ */
+}
+
+canvas {
+    width: 100% !important; /* Canvas sẽ chiếm hết chiều rộng của phần tử cha */
+    height: auto !important; /* Đảm bảo chiều cao tự động */
+}
+
+

@@ -8,6 +8,7 @@ namespace do_an_web.Models
     public class AccountListViewModel
     {
         public IEnumerable<Account> ListAcc { get; set; }
+        public IEnumerable<Order> orders { get; set; }
         public int TotalRecords { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }

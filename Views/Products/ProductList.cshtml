@@ -71,7 +71,7 @@
                     <p>@item.product_name</p>
                 </a>
                 <div class="danh-gia-5-sao">
-                    <p>@item.price ₫</p>
+                    <p>@String.Format("{0:N0}", item.price) ₫</p>
                 </div>
             </div>
         </div>
@@ -80,7 +80,14 @@
 
 <!-- Phân trang -->
 <div class="pagination">
-    @Html.PagedListPager(Model.ListProduct1, page => Url.Action("ProductList", new { page = page }))
+    @Html.PagedListPager(Model.ListProduct1, page => Url.Action("ProductList", new
+    {
+        page = page,
+        SearchString = Request["SearchString"],
+        min = Request["min"],
+        max = Request["max"],
+        category = Request["category"]
+    }))
 </div>
 
 <style>

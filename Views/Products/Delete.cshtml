@@ -54,6 +54,31 @@
         background-color: #007bff; /* Màu xanh cho nút quay lại */
     }
 
+    .btn-custom {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 14px;
+        flex: 1;
+        text-align: center;
+        text-decoration: none;
+        min-width: 120px; /* Đảm bảo chiều rộng tối thiểu */
+    }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-custom[style*="background-color:palevioletred"] {
+            background-color: palevioletred;
+        }
+
+            .btn-custom[style*="background-color:palevioletred"]:hover {
+                background-color: #c71585;
+            }
         .btn-back:hover {
             background-color: #0056b3; /* Màu nền khi hover */
         }
@@ -72,7 +97,7 @@
     <div class="info-container">
         <h2>Chi tiết sản phẩm muốn xóa</h2>
         <h4>@Html.DisplayFor(model => model.product_name)</h4>
-        <p class="price">Giá: @Html.DisplayFor(model => model.price)</p>
+        <p class="price">Giá: @String.Format("{0:N0}", Model.price) ₫</p>
         <p class="description">Miêu tả: @Html.DisplayFor(model => model.description)</p>
         <p class="category">Thể loại: @Html.DisplayFor(model => model.Category.category_name)</p>
         <p class="company">Công ty: @Html.DisplayFor(model => model.Category1.company_name)</p>
@@ -83,7 +108,7 @@
                     @Html.AntiForgeryToken()
                     <div class="form-actions no-color">
                         <input type="submit" value="Xóa" class="btn btn-delete" />
-                        @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-back" })
+                        @Html.ActionLink("Quay lại", "GoBack", "hoasinhnhat", new { id = Model.product_id }, new { @class = "btn-custom", @style = "margin-left: 10px;" })
                     </div>
                 }
             </div>

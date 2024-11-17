@@ -34,7 +34,8 @@
                 </div>
                 <div class="product-info">
                     <h3>@Html.DisplayFor(modelItem => item.product_name)</h3>
-                    <p>Giá: @Html.DisplayFor(modelItem => item.price)</p>
+                    <p class="price">Giá: @String.Format("{0:N0}", item.price) ₫</p>
+
                     <p>Miêu tả: @Html.DisplayFor(modelItem => item.description)</p>
                     <p>Loại: @Html.DisplayFor(modelItem => item.Category1.company_name)</p>
                     <p>Thể Loại: @Html.DisplayFor(modelItem => item.Category.category_name)</p>

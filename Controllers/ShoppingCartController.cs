@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,6 +13,15 @@ namespace do_an_web.Controllers
         private DB_shopbanhoaEntities db = new DB_shopbanhoaEntities();
         public ActionResult ShowCart()
         {
+          
+            ViewBag.check = Session["check"];
+            if (ViewBag.check == null)
+            {
+                ViewBag.mes = "Vui lòng đăng nhập để mua hàng và xem giỏ giỏ hàng";
+                return View();
+            }
+            ViewBag.use = Session["username"];
+            ViewBag.id = int.Parse(Session["id"].ToString());
             if (Session["Cart"] == null)
                 return View("ShowCart");
             Cartt _cart = Session["Cart"] as Cartt;
@@ -19,6 +29,7 @@ namespace do_an_web.Controllers
         }
         public ActionResult CheckOut_Success()
         {
+            ViewBag.uid = int.Parse(Session["id"].ToString());
             return View("CheckOut_Success");
         }
     
@@ -32,8 +43,9 @@ namespace do_an_web.Controllers
                 OrderItem a_order = new OrderItem();
               
                 _order.order_date = DateTime.Now;
-                _order.account_id = int.Parse(form["CodeCustomer"]);
-                db.Orders.Add(_order);
+                _order.account_id = int.Parse(form["id"]);
+                string b = form["pay"];
+                decimal total = 0;
                 foreach (var item in cart.Items)
                 {
                     // lưu dòng sản phẩm vào chi tiết hóa đơn
@@ -41,16 +53,21 @@ namespace do_an_web.Controllers
                     _order_detail.order_id = _order.order_id;
                     _order_detail.product_id = item._product.product_id;
                     _order_detail.price = (decimal)item._product.price;
+                    total += (decimal)item._product.price * item._quantity;
                     _order_detail.quantity = item._quantity;
+                    _order.status = "Pending";
+                    _order.phuongthuc = b;
                     db.OrderItems.Add(_order_detail);
                 }
+                _order.total_amount = total;
+                db.Orders.Add(_order);
                 db.SaveChanges();
                 cart.ClearCart();
                 return RedirectToAction("CheckOut_Success", "ShoppingCart");
             }
             catch
             {
-                return Content("Có sai sót! Xin kiểm tra lại thông tin"); ;
+                return Content("Có sai sót! Xin kiểm tra lại thông tin"); 
             }
         }
 

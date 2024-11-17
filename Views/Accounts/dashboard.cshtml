@@ -1,0 +1,288 @@
+﻿@model do_an_web.Models.DashboardViewModel
+
+@{
+    ViewBag.Title = "dashboard";
+
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    ViewBag.ti = ViewBag.Title;
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<link href="~/Css/manhne.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
+<body>
+    <h4 style="text-align:center">Thông tin dữ liệu</h4>
+    <div class="dashboard-stats">
+
+        <div class="stat">
+            <h3>Tổng Khách Hàng</h3>
+            <p>@Model.TotalCustomers</p>
+            <a href="@Url.Action("Create", "Accounts")" class="btn btn-primary">Thêm Khách Hàng</a>
+        </div>
+        <div class="stat">
+            <h3>Tổng Sản Phẩm</h3>
+            <p>@Model.TotalProducts</p>
+            <a href="@Url.Action("Create", "Products")" class="btn btn-primary">Thêm Sản Phẩm</a>
+        </div>
+        <div class="stat">
+            <h3>Tổng Danh Mục Hoa</h3>
+            <p>@Model.TotalCategories1</p>
+
+        </div>
+        <div class="stat">
+            <h3>Tổng Loại Hoa</h3>
+            <p>@Model.TotalCategories</p>
+
+        </div>
+
+        <div class="stat">
+            <h3>Tổng Đơn Hàng</h3>
+            <p>@Model.TotalOrders</p>
+
+        </div>
+        <div class="stat">
+            <h3>Tổng Đơn Chờ Xác Nhận</h3>
+            <p>@Model.Totalacp</p>
+
+        </div> <div class="stat">
+            <h3>Tổng Đơn Đã Giao</h3>
+            <p>@Model.Totaldagiao</p>
+
+        </div>  <div class="stat">
+            <h3>Tổng Đơn Đang Giao</h3>
+            <p>@Model.Totaldanggiao</p>
+
+        </div>    <div class="stat">
+            <h3>Tổng Đơn Đã Hủy </h3>
+            <p>@Model.Totaldahuy</p>
+
+        </div>
+
+        <div class="stat">
+            <h3>Doanh Thu</h3>
+            <p>  @String.Format("{0:N0}", @Model.TotalRevenue)  ₫</p>
+        </div>
+    </div>
+    <h4 style="text-align:center">Biểu đồ hiện thị dữ liệu</h4>
+    <div class="chart-container-wrapper">
+        <!-- Biểu đồ Doanh Thu Theo Ngày -->
+        <div class="chart-container">
+
+            <canvas id="dailyRevenueChart" width="400" height="200"></canvas>
+        </div>
+        <!-- Biểu đồ Đơn Hàng Theo Ngày -->
+        <div class="chart-container">
+
+            <canvas id="dailyOrdersChart" width="400" height="200"></canvas>
+        </div>
+        <!-- Biểu đồ Doanh Thu Theo Tháng -->
+        <div class="chart-container">
+
+            <canvas id="monthlyRevenueChart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Biểu đồ Doanh Thu Theo Tuần -->
+        <div class="chart-container">
+
+            <canvas id="weeklyRevenueChart" width="400" height="200"></canvas>
+        </div>
+
+
+    </div>
+    <script>
+        $(document).ready(function () {
+    // Lấy doanh thu và số lượng đơn hàng theo ngày
+    $.getJSON('@Url.Action("DailyRevenueAndOrders")', function (data) {
+        // Chuyển đổi ngày tháng nếu dữ liệu trả về theo định dạng /Date(....)/
+        var dailyDates = data.map(function (x) {
+            // Kiểm tra xem x.Date có phải là chuỗi hay là timestamp
+            if (x.Date) {
+                // Nếu là timestamp dưới dạng chuỗi "/Date(....)/", ta sẽ tách lấy giá trị timestamp
+                if (typeof x.Date === "string" && x.Date.indexOf("/Date(") === 0) {
+                    var timestamp = x.Date.match(/\d+/)[0];  // Lấy timestamp từ chuỗi
+                    var date = new Date(parseInt(timestamp)); // Chuyển timestamp thành đối tượng Date
+                    return date.toLocaleDateString('vi-VN');  // Định dạng ngày theo kiểu 'dd/MM/yyyy'
+                } else {
+                    // Nếu ngày đã ở dạng chuỗi ngày hợp lệ
+                    return new Date(x.Date).toLocaleDateString('vi-VN');  // Định dạng ngày tháng
+                }
+            } else {
+                return 'Ngày không hợp lệ';  // Trường hợp không có ngày
+            }
+        }); // Định dạng lại ngày tháng theo kiểu 'dd/MM/yyyy'
+
+
+        var dailyRevenue = data.map(function (x) {
+            return x.TotalRevenue;  // Lấy doanh thu
+        });
+
+        var dailyOrders = data.map(function (x) {
+            return x.TotalOrders;  // Lấy số lượng đơn hàng
+        });
+
+        console.log(data);  // Xem dữ liệu từ server
+
+        // Vẽ biểu đồ doanh thu theo ngày
+        var dailyRevenueChart = new Chart($('#dailyRevenueChart'), {
+            type: 'line',
+            data: {
+                labels: dailyDates,  // Gán labels là ngày tháng đã được định dạng
+                datasets: [{
+                    label: 'Doanh Thu Theo Ngày',
+                    data: dailyRevenue,  // Dữ liệu doanh thu
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false,  // Không điền màu dưới đường biểu đồ
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Ngày'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Doanh Thu (VND)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Vẽ biểu đồ đơn hàng theo ngày
+        var dailyOrdersChart = new Chart($('#dailyOrdersChart'), {
+            type: 'line',
+            data: {
+                labels: dailyDates,  // Gán labels là ngày tháng đã được định dạng
+                datasets: [{
+                    label: 'Số Lượng Đơn Hàng Theo Ngày',
+                    data: dailyOrders,  // Dữ liệu số lượng đơn hàng
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    fill: false,  // Không điền màu dưới đường biểu đồ
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Ngày'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Số Lượng Đơn Hàng'
+                        }
+                    }
+                }
+            }
+        });
+    });
+});
+
+   $(document).ready(function () {
+    // Lấy doanh thu theo ngày
+    $.getJSON('@Url.Action("DailyRevenue")', function (data) {
+        // Chuyển đổi ngày tháng nếu dữ liệu trả về theo định dạng /Date(....)/
+        var dailyDates = data.map(function (x) {
+            // Lấy timestamp từ chuỗi "/Date(....)/" và chuyển đổi thành đối tượng Date
+            var timestamp = x.Date.match(/\d+/)[0];  // Lấy số timestamp từ chuỗi
+            var date = new Date(parseInt(timestamp)); // Chuyển timestamp thành đối tượng Date
+            return date.toLocaleDateString('vi-VN');  // Định dạng lại ngày tháng theo kiểu 'dd/MM/yyyy'
+        });
+
+        var dailyRevenue = data.map(function (x) {
+            return x.TotalRevenue;  // Lấy doanh thu
+        });
+
+        console.log(data);  // Xem dữ liệu từ server
+
+        // Vẽ biểu đồ doanh thu theo ngày
+        var dailyRevenueChart = new Chart($('#dailyRevenueChart'), {
+            type: 'line',
+            data: {
+                labels: dailyDates,  // Gán labels là ngày tháng đã được định dạng
+                datasets: [{
+                    label: 'Doanh Thu Theo Ngày',
+                    data: dailyRevenue,  // Dữ liệu doanh thu
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false,  // Không điền màu dưới đường biểu đồ
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Ngày'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Doanh Thu (VND)'
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+
+
+        // Lấy doanh thu theo tháng
+        $.getJSON('@Url.Action("MonthlyRevenue")', function (data) {
+            var months = data.map(x => x.Month + '/' + x.Year);
+            var monthlyRevenue = data.map(x => x.TotalRevenue);
+
+            var monthlyRevenueChart = new Chart($('#monthlyRevenueChart'), {
+                type: 'bar',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Doanh Thu Theo Tháng',
+                        data: monthlyRevenue,
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        borderWidth: 1
+                    }]
+                }
+            });
+        });
+
+        // Lấy doanh thu theo tuần
+        $.getJSON('@Url.Action("WeeklyRevenue")', function (data) {
+            var weeks = data.map(x => 'Tuần ' + x.Week);
+            var weeklyRevenue = data.map(x => x.TotalRevenue);
+
+            var weeklyRevenueChart = new Chart($('#weeklyRevenueChart'), {
+                type: 'bar',
+                data: {
+                    labels: weeks,
+                    datasets: [{
+                        label: 'Doanh Thu Theo Tuần',
+                        data: weeklyRevenue,
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    }]
+                }
+            });
+        });
+    });
+    </script>
+</body>

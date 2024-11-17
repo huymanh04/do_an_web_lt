@@ -25,6 +25,7 @@ namespace do_an_web.Models
         public Nullable<System.DateTime> order_date { get; set; }
         public decimal total_amount { get; set; }
         public string status { get; set; }
+        public string phuongthuc { get; set; }
     
         public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -221,7 +221,13 @@
                     @Html.ActionLink("Thêm sản phẩm", "index", "Products", new { id = item.account_id }, new { @class = "button", @style = "margin-right: 10px;" })
                     @Html.ActionLink("Tạo mới Khách hàng", "Create", "Accounts", new { id = item.account_id }, new { @class = "button", @style = "margin-right: 10px;" })}
                 @Html.ActionLink("Chỉnh sửa", "Edit", "Accounts", new { id = item.account_id }, new { @class = "button", @style = "margin-right: 10px;" })
-                @if (ViewBag.admin == null){@Html.ActionLink("Đăng xuất", "Dangxuat", "Accounts", new { id = item.account_id }, new { @class = "button" })
+                @if (ViewBag.admin == null)
+                {
+
+                    @Html.ActionLink("Đăng xuất", "Dangxuat", "Accounts", new { id = item.account_id }, new { @class = "button", @style = "margin-right: 10px;" })
+                    @Html.ActionLink("Xem đơn hàng của bạn", "lichsudonhang", "Accounts", null, new { @class = "button" })
+
+
                 }
             </div>
         }

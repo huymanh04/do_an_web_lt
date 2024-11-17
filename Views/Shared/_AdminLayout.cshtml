@@ -13,10 +13,11 @@
         <aside class="sidebar">
             <div class="logo">Trang quản lý Admin</div>
             <nav class="menu">
-                @Html.ActionLink("Dashboard", "Index", "Accounts", null, new { @class = "menu-link" })
+                @Html.ActionLink("Dashboard", "dashboard", "Accounts", null, new { @class = "menu-link" })
+                @Html.ActionLink("Quản lý tài khoản", "Index", "Accounts", null, new { @class = "menu-link" })
                 @Html.ActionLink("Quản lý người dùng", "Quanlythanhvien", "Accounts", null, new { @class = "menu-link" })
                 @Html.ActionLink("Quản lý sản phẩm", "Index", "Products", null, new { @class = "menu-link" })
-                @Html.ActionLink("Quản lý đơn hàng", "Index", "Orders", null, new { @class = "menu-link" })
+                @Html.ActionLink("Quản lý đơn hàng", "Index", "Orders1", null, new { @class = "menu-link" })
                  @Html.ActionLink("Đăng xuất", "Dangxuat", "Accounts", new { id = @ViewBag.account_id }, new { @class = "logout" })
 
             </nav>

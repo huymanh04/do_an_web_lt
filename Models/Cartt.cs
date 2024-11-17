@@ -13,10 +13,13 @@ namespace do_an_web.Models
     // Giỏ hàng (Cart) gồm tập hợp các mục sản phẫm (CartItem) được chọn
     public class Cartt
     {
+        private DB_shopbanhoaEntities db = new DB_shopbanhoaEntities();
+        public Account acc { get; set; }
         // Dùng cấu trúc List để lưu trữ giỏ hàng (Items)  xem như là một bảng tạm
         List<CarttItem> items = new List<CarttItem>();
         public IEnumerable<CarttItem> Items
         {
+            
             get { return items; }
         }
         // Phương thức lấy sản phẩm bỏ vào giỏ hàng,
@@ -35,6 +38,7 @@ namespace do_an_web.Models
         // Phương thức tính tổng số lượng trong giỏ hàng
         public int Total_quantity()
         {
+            
             return items.Sum(s => s._quantity);
         }
         // Hàm tính thành tiền cho mỗi sản phẩm trong giỏ hàng

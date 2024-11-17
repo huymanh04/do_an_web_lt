@@ -64,7 +64,9 @@
     <div class="info-container">
         <h2>Chi tiết sản phẩm</h2>
         <h4>@Html.DisplayFor(model => model.product_name)</h4>
-        <p class="price">Giá: @Html.DisplayFor(model => model.price)</p>
+
+        <p class="price">Giá: @String.Format("{0:N0}", Model.price) ₫</p>
+
 
         <p class="description">Miêu tả: @Html.DisplayFor(model => model.description)</p>
         <p class="category">Thể loại: @Html.DisplayFor(model => model.Category1.company_name)</p>
@@ -77,12 +79,12 @@
                     @Html.ActionLink("Quay lại", "GoBack", "hoasinhnhat", new { id = Model.product_id }, new { @class = "btn-custom", @style = "margin-left: 10px;" })
                 }
                 else
-                { 
+                {
                     <a href="~/ShoppingCart/AddToCart/@Model.product_id" class="btn btn-danger"> Mua </a>
- @Html.ActionLink("Quay lại", "GoBack", "hoasinhnhat", new { id = Model.product_id }, new { @class = "btn btn-primary", @style = "margin-right: 10px;" })
+                    @Html.ActionLink("Quay lại", "GoBack", "hoasinhnhat", new { id = Model.product_id }, new { @class = "btn btn-primary", @style = "margin-right: 10px;" })
                 }
             </div>
-    </p>
+        </p>
 
     </div>
 </div>

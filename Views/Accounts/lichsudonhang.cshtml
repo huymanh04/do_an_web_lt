@@ -1,0 +1,53 @@
+﻿@model do_an_web.Models.PurchaseHistoryViewModel
+@{
+    ViewBag.Title = "PurchaseHistory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- Thêm CSS vào View -->
+<link href="~/Css/licsu.css" rel="stylesheet" />
+
+<h2 style=" margin-top:20px">Lịch sử mua hàng</h2>
+<link href="~/Css/page.css" rel="stylesheet" />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên sản phẩm</th>
+            <th>Giá sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Ngày đặt hàng</th>
+            <th>Tổng tiền cho sản phẩm</th>
+            <th>Trạng thái</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PurchaseHistory)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td class="currency">@String.Format("{0:N0}", item.ProductPrice) ₫</td>
+                <td>@item.Quantity</td>
+                <td>@item.OrderDate.ToString("dd/MM/yyyy")</td>
+                <td class="currency">@String.Format("{0:N0}", item.TotalAmount) ₫</td>
+                <td>@item.OrderStatus</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="pagination">
+    @if (Model.PageNumber > 1)
+    {
+        <a href="@Url.Action("lichsudonhang", new { pageNumber = Model.PageNumber - 1, pageSize = Model.PageSize })" class="prev">Trước</a>
+    }
+
+    @for (int i = 1; i <= (int)Math.Ceiling((double)Model.TotalRecords / Model.PageSize); i++)
+    {
+        <a href="@Url.Action("lichsudonhang", new { pageNumber = i, pageSize = Model.PageSize })" class="@(i == Model.PageNumber ? "active" : "")">@i</a>
+    }
+
+    @if (Model.PageNumber < (int)Math.Ceiling((double)Model.TotalRecords / Model.PageSize))
+    {
+        <a href="@Url.Action("lichsudonhang", new { pageNumber = Model.PageNumber + 1, pageSize = Model.PageSize })" class="next">Tiếp theo</a>
+    }
+</div>

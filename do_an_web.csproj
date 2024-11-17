@@ -135,6 +135,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Content\OrdersController.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\Category1Controller.cs" />
@@ -143,6 +144,8 @@
     <Compile Include="Controllers\hoanhapkhauController.cs" />
     <Compile Include="Controllers\hoasinhnhatController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderItemsController.cs" />
+    <Compile Include="Controllers\Orders1Controller.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\thietkeController.cs" />
@@ -166,6 +169,7 @@
     <Compile Include="Models\Category1.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\Homemol.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
@@ -189,6 +193,10 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PurchaseHistoryViewModel.cs" />
+    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -220,10 +228,15 @@
     <Content Include="Content\profile.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\styles.css" />
+    <Content Include="Css\cart.css" />
     <Content Include="Css\cre.css" />
     <Content Include="Css\editprofile.css" />
+    <Content Include="Css\licsu.css" />
+    <Content Include="Css\manhne.css" />
     <Content Include="Css\page.css" />
+    <Content Include="Css\qunlydonhang.css" />
     <Content Include="Css\style.css" />
+    <Content Include="Css\StyleCart.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -316,12 +329,24 @@
     <Content Include="Views\chude\chucmung.cshtml" />
     <Content Include="Views\Accounts\dangky.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
-    <Content Include="Views\Accounts\View.cshtml" />
     <Content Include="Views\Accounts\Quanlythanhvien.cshtml" />
     <Content Include="Views\Products\ProductList.cshtml" />
     <Content Include="Views\ShoppingCart\ShowCart.cshtml" />
     <Content Include="Views\ShoppingCart\CheckOut_Success.cshtml" />
     <Content Include="Views\ShoppingCart\BagCart.cshtml" />
+    <Content Include="Views\Accounts\dashboard.cshtml" />
+    <Content Include="Views\OrderItems\Create.cshtml" />
+    <Content Include="Views\OrderItems\Delete.cshtml" />
+    <Content Include="Views\OrderItems\Details.cshtml" />
+    <Content Include="Views\OrderItems\Edit.cshtml" />
+    <Content Include="Views\OrderItems\Index.cshtml" />
+    <Content Include="Views\Orders1\Create.cshtml" />
+    <Content Include="Views\Orders1\Delete.cshtml" />
+    <Content Include="Views\Orders1\Details.cshtml" />
+    <Content Include="Views\Orders1\Edit.cshtml" />
+    <Content Include="Views\Orders1\Index.cshtml" />
+    <Content Include="Views\Accounts\loi.cshtml" />
+    <Content Include="Views\Accounts\lichsudonhang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

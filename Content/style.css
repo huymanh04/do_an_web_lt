@@ -102,3 +102,25 @@
         }
 
 /*hoa nhập khẩu */
+.moving-text {
+    font-size: 24px;
+    font-weight: bold;
+    white-space: nowrap; /* Ngăn không cho văn bản xuống dòng */
+    overflow: hidden; /* Ẩn phần văn bản tràn ra ngoài */
+    display: inline-block;
+    position: relative;
+    animation: moveText 20s linear infinite; /* Chạy từ phải qua trái */
+}
+
+@keyframes moveText {
+    0% {
+        transform: translateX(200%); /* Bắt đầu từ bên phải */
+    }
+
+    100% {
+        transform: translateX(-200%); /* Kết thúc bên trái */
+    }
+}
+.moving-text {
+    margin-right: 20px; /* Khoảng cách giữa hai đoạn văn */
+}

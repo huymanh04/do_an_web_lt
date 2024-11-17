@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="DB_shopbanhoaModel.Category" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_shopbanhoaModel.Category1" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_shopbanhoaModel.OrderItem" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_shopbanhoaModel.Order" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_shopbanhoaModel.Order" Width="1.5" PointX="8.625" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_shopbanhoaModel.Product" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
         <AssociationConnector Association="DB_shopbanhoaModel.FK__Cart__account_id__38996AB5" ManuallyRouted="false" />
         <AssociationConnector Association="DB_shopbanhoaModel.FK__Orders__account___31EC6D26" ManuallyRouted="false" />
@@ -22,6 +22,7 @@
         <AssociationConnector Association="DB_shopbanhoaModel.FK__Product__company__29572725" ManuallyRouted="false" />
         <AssociationConnector Association="DB_shopbanhoaModel.FK__OrderItem__order__34C8D9D1" ManuallyRouted="false" />
         <AssociationConnector Association="DB_shopbanhoaModel.FK__OrderItem__produ__35BCFE0A" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DB_shopbanhoaModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

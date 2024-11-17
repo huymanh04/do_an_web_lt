@@ -39,6 +39,8 @@ namespace do_an_web.Controllers
             // Tìm kiếm chuỗi truy vấn theo đơn giá
             if (min >= 0 && max > 0)
             {
+                min *= 1000;
+                max *= 1000;
                 products = db.Products.OrderByDescending(x => x.price).Where(p => (double)p.price >= min && (double)p.price <= max);
             }
 
@@ -204,6 +206,7 @@ namespace do_an_web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Product product = db.Products.Find(id);
+            Session["img"] = product.images;
             if (product == null)
             {
                 return HttpNotFound();
@@ -222,29 +225,57 @@ namespace do_an_web.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Kiểm tra nếu có tệp hình ảnh được tải lên
+                // Tìm sản phẩm hiện tại trong cơ sở dữ liệu
+                var existingProduct = db.Products.Find(product.product_id);
+
+                if (existingProduct == null)
+                {
+                    // Nếu không tìm thấy sản phẩm, trả về lỗi hoặc thông báo
+                    ModelState.AddModelError("", "Sản phẩm không tồn tại.");
+                    return View(product);  // Trả về trang Edit với thông báo lỗi
+                }
+
+                // Kiểm tra nếu có tệp hình ảnh mới được tải lên
                 if (imageFile != null && imageFile.ContentLength > 0)
                 {
                     // Đọc tệp hình ảnh vào byte[]
                     using (var memoryStream = new MemoryStream())
                     {
                         imageFile.InputStream.CopyTo(memoryStream);
-                        product.images = memoryStream.ToArray(); // Gán mảng byte vào thuộc tính image
+                        product.images = memoryStream.ToArray();  // Cập nhật hình ảnh mới
                     }
+                }
+                else
+                {
+                    // Nếu không có hình ảnh mới, giữ lại hình ảnh cũ từ session
+                    product.images = (byte[])Session["img"];
                 }
 
                 // Cập nhật thông tin sản phẩm
-                db.Entry(product).State = EntityState.Modified;
-                try {
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                db.Entry(existingProduct).CurrentValues.SetValues(product);  // Cập nhật tất cả các giá trị từ product vào existingProduct
+
+                // Đánh dấu trạng thái của sản phẩm là Modified
+                db.Entry(existingProduct).State = EntityState.Modified;
+
+                try
+                {
+                    db.SaveChanges();  // Lưu thay đổi vào cơ sở dữ liệu
+                    return RedirectToAction("Index");  // Chuyển hướng về trang Index sau khi lưu thành công
                 }
-                catch { return RedirectToAction("Index"); }
+                catch
+                {
+                    // Nếu có lỗi trong quá trình lưu dữ liệu, hiển thị thông báo lỗi
+                    ModelState.AddModelError("", "Có lỗi khi lưu dữ liệu.");
+                    return View(product);  // Trả về trang Edit với thông báo lỗi
+                }
             }
+
+            // Nếu ModelState không hợp lệ, hiển thị lại form với các giá trị đã nhập
             ViewBag.category_id = new SelectList(db.Categories, "category_id", "category_name", product.category_id);
             ViewBag.company_id = new SelectList(db.Category1, "category1_id", "company_name", product.company_id);
             return View(product);
         }
+
 
         // GET: Products/Delete/5
         public ActionResult Delete(int? id)
