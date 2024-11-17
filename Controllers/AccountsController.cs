@@ -445,6 +445,7 @@ namespace do_an_web.Controllers
             Session["ErrorMessage"] = null;
             Session["username"] = null ;
             Session["check"] = false;
+            Session.Clear();
             return RedirectToAction("Index1", "Products");
         }
         // GET: Accounts/Delete/5

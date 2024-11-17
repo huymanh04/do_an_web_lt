@@ -10,7 +10,7 @@
     {
         ViewBag.Title = "Trang Admin";
         Layout = "~/Views/Shared/_AdminLayout.cshtml";
-        ViewBag.ti = "Dashboard";
+        ViewBag.ti = "Profile";
     }
 }
 
@@ -224,8 +224,8 @@
                 @if (ViewBag.admin == null)
                 {
 
+                    @Html.ActionLink("Xem đơn hàng của bạn", "lichsudonhang", "Accounts", null, new { @class = "button", @style = "margin-right: 10px;" })
                     @Html.ActionLink("Đăng xuất", "Dangxuat", "Accounts", new { id = item.account_id }, new { @class = "button", @style = "margin-right: 10px;" })
-                    @Html.ActionLink("Xem đơn hàng của bạn", "lichsudonhang", "Accounts", null, new { @class = "button" })
 
 
                 }
