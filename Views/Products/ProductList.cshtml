@@ -37,7 +37,7 @@
     }
 </style>
 <link href="~/Css/page.css" rel="stylesheet" />
-<link href="~/Content/huymanh.css" rel="stylesheet" />
+<link href="~/Content/huymanh.css?v=@DateTime.Now.Ticks" rel="stylesheet" />
 <div class="search-container">
     @using (Html.BeginForm("ProductList", "Products", FormMethod.Get))
     {

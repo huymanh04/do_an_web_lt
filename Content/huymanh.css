@@ -1,132 +1,131 @@
-﻿/* Thiết kế chung */
+﻿
+.dvd {
+    margin: 20px;
+}
+
+.title-div {
+    border-radius: 15px;
+    width: 100%;
+    height: 100px;
+    background-color: #f1f1f1;
+}
+
+    .title-div h4 {
+        margin-left: 20px;
+        padding-top: 20px;
+    }
+
+.is-smaller {
+    margin-left: 20px;
+    font-size: 15px;
+}
+
+.rank-math-breadcrumb breadcrumbs {
+    padding-top: 20px;
+}
+
+.nav-link_dropdown-toggleea {
+    text-decoration: none;
+    color: black;
+    border: none;
+}
+
+    .nav-link_dropdown-toggleea:hover, .nav-link_dropdown-toggleea:focus {
+        text-decoration: none;
+        color: inherit;
+        background-color: transparent;
+        outline: none;
+    }
+
+/*    hoa*/
+.containera {
+    margin-top: 20px;
+    display: flex;
+    flex: 1 1 25%;
+    box-sizing: border-box;
+}
+
 .containeraa {
     margin-top: 20px;
     flex-wrap: wrap;
     display: flex;
-    justify-content: center; /* Căn giữa các sản phẩm */
-    gap: 15px; /* Khoảng cách giữa các sản phẩm */
+}
+
+@media (max-width: 1200px) {
+    .containera {
+        flex: 1 1 43.33%;
+    }
+}
+
+@media (max-width: 900px) {
+    .containera {
+        flex: 1 1 50%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .containera {
+        flex: 1 1 50%;
+    }
+}
+
+@media (max-width: 600px) {
+    .containera {
+        flex: 1 1 100%;
+    }
 }
 
 .item {
     text-align: center;
     position: relative;
-    width: 100%; /* Đặt chiều rộng mặc định */
-    max-width: 150px; /* Giới hạn chiều rộng tối đa cho sản phẩm */
+    width: 110px;
+    height: 550px;
     background-color: #f0f0f0;
-    padding: 15px; /* Giảm padding để tối ưu diện tích */
+    padding-bottom: 20px;
     border-radius: 15px;
     text-align: center;
-    flex: 1 1 100%; /* Chia đều giữa các khối */
-    margin: 0 5px; /* Khoảng cách giữa các sản phẩm */
-}
-
-.anh-hoa {
-    border-radius: 15px;
-    width: 100%;
-    height: auto;
-    object-fit: cover; /* Đảm bảo hình ảnh vừa khít */
+    flex: 1; /* Chia đều chiều rộng giữa các thẻ con */
+    margin: 0 10px; /* Khoảng cách giữa các thẻ con */
 }
 
 .ok1 {
-    margin-top: 10px;
-    font-size: 14px; /* Giảm kích thước chữ để vừa màn hình nhỏ */
+    border-radius: 15px;
+    width: 100%;
+    height: 350px;
 }
 
-/* Dành riêng cho điện thoại */
-@media (max-width: 600px) {
-    .item {
-        max-width: 100%; /* Sản phẩm chiếm toàn bộ chiều ngang */
-        margin: 0 auto; /* Căn giữa các sản phẩm */
-    }
-
-    .anh-hoa {
-        height: 300px; /* Giảm chiều cao của hình ảnh */
-    }
-
-    .ok1 a {
-        font-size: 14px; /* Chữ nhỏ hơn trên điện thoại */
-    }
-
-    .danh-gia-5-sao p {
-        font-size: 14px; /* Giảm kích thước giá */
-    }
-
-    .danh-gia-5-sao:before {
-        font-size: 20px; /* Giảm kích thước sao đánh giá */
-    }
+.danh-gia-5-sao {
 }
 
-/* Thiết kế cho máy tính bảng */
-@media (min-width: 600px) and (max-width: 900px) {
-    .item {
-        flex: 1 1 calc(50% - 10px); /* Hai sản phẩm trên một hàng */
-    }
+.ok1 a {
+    color: black;
+    text-decoration: none;
+    margin-top: 20px;
+    font-size: 17px;
 }
 
-@media (min-width: 900px) and (max-width: 1200px) {
-    .item {
-        flex: 1 1 calc(33.33% - 10px); /* Ba sản phẩm trên một hàng */
+    .ok1 a:hover {
+        text-decoration: none;
+        color: forestgreen;
     }
+
+.anh-hoa {
+    margin-bottom: 10px;
+    border-radius: 15px;
+    width: 100%;
+    height: 400px;
+    background-repeat: no-repeat; /* Không lặp lại ảnh nền */
 }
 
-@media (min-width: 1200px) {
-    .item {
-        flex: 1 1 calc(25% - 10px); /* Bốn sản phẩm trên một hàng */
-    }
+.danh-gia-5-sao:before {
+    box-sizing: border-box;
+    content: "★★★★★";
+    color: rgb(255, 193, 7);
+    font-size: 30px;
 }
 
-/* CSS chung cho điện thoại */
-@media (max-width: 600px) {
-    /* Canh chỉnh hàng và cột cho bố cục điện thoại */
-    .row {
-        display: flex;
-        flex-direction: column;
-        margin-left: 0; /* Xóa khoảng cách thừa */
-    }
-
-    /* Đảm bảo hình ảnh vừa với màn hình */
-    .img-inner {
-        width: 100%;
-        height: auto;
-    }
-
-    /* Điều chỉnh tiêu đề */
-    h3 {
-        font-size: 1.2rem;
-        text-align: center;
-        margin: 10px 0;
-    }
-
-    /* Chỉnh kích thước font trong bài viết */
-    #text-1443142437, #text-1353662038 {
-        font-size: 0.9rem;
-        text-align: justify;
-    }
-
-    /* Điều chỉnh bố cục hai cột thành một cột */
-    .col {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    /* Điều chỉnh khoảng cách giữa các phần */
-    #section_427190754 {
-        padding: 20px 10px;
-    }
-
-    /* Đảm bảo hình ảnh chiếm đủ chiều rộng màn hình */
-    #image_2056088073, #image_1286391954 {
-        width: 100%;
-    }
-
-    /* Điều chỉnh kích thước các nút hoặc liên kết */
-    .img-inner a {
-        font-size: 1rem;
-    }
-
-    /* Đảm bảo không bị tràn nội dung */
-    .homepage-about {
-        word-wrap: break-word;
-        margin: 10px;
-    }
+.danh-gia-5-sao p {
+    color: rgb(57, 91, 56);
+    font-weight: bold;
+    font-size: 18px;
 }
