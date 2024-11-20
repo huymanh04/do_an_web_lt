@@ -114,11 +114,11 @@
 
 @keyframes moveText {
     0% {
-        transform: translateX(200%); /* Bắt đầu từ bên phải */
+        transform: translateX(90%); /* Bắt đầu từ bên phải */
     }
 
     100% {
-        transform: translateX(-200%); /* Kết thúc bên trái */
+        transform: translateX(-100%); /* Kết thúc bên trái */
     }
 }
 .moving-text {

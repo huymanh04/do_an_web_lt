@@ -12,6 +12,7 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
 using do_an_web.Models;
+using static QRCoder.PayloadGenerator;
 
 namespace do_an_web.Controllers
 {
@@ -49,8 +50,8 @@ namespace do_an_web.Controllers
 
         public ActionResult lichsudonhang(int pageNumber = 1, int pageSize = 8)
         {
-
-            int accountId = int.Parse(Session["id"].ToString());
+          
+                int accountId = int.Parse(Session["id"].ToString());
             // Lấy tổng số đơn hàng
             var totalRecords = db.Orders
                 .Where(o => o.account_id == accountId)
@@ -66,7 +67,7 @@ namespace do_an_web.Controllers
                 {
                     OrderId = o.o.order_id,
                     OrderDate = o.o.order_date ?? DateTime.MinValue,  // Kiểm tra nullable DateTime
-                    TotalAmount = o.o.total_amount,
+                    TotalAmount = o.oi.price*o.oi.quantity,
                     OrderStatus = o.o.status,
                     ProductId = p.product_id,
                     ProductName = p.product_name,
@@ -201,6 +202,10 @@ namespace do_an_web.Controllers
 
         public ActionResult Quanlythanhvien(int pageNumber = 1, int pageSize = 10)
         {
+            if (Session["admin"] == null)
+            {
+                return RedirectToAction("Index", "Products");
+            }
             ViewBag.use = Session["username"];
             var totalRecords = db.Accounts.Count();
             var accounts = db.Accounts
@@ -253,9 +258,55 @@ namespace do_an_web.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult dangky()
+        public ActionResult dangky(Account account)
         {
-            return View();
+            if (TempData["ModelStateErrors"] != null)
+            {
+                var errors = (List<string>)TempData["ModelStateErrors"];
+                foreach (var error in errors)
+                {
+                    switch (error)
+                    {
+                        case "Tên khách hàng không được để trống.":
+                            ModelState.AddModelError("full_name", error);
+                            break;
+                        case "Username không được để trống.":
+                            ModelState.AddModelError("username", error);
+                            break;
+                        case "Username đã tồn tại":
+                            ModelState.AddModelError("username", error);
+                            break;
+                        case "Password không được để trống.":
+                            ModelState.AddModelError("password", error);
+                            break;
+                        case "Email không được để trống.":
+                            ModelState.AddModelError("email", error);
+                            break;
+                        case "Email không đúng dịnh dạng.":
+                            ModelState.AddModelError("email", error);
+                            break;
+                        case "Email đã tồn tại":
+                            ModelState.AddModelError("email", error);
+                            break;
+                        case "Số điện thoại không được để trống.":
+                            ModelState.AddModelError("phone", error);
+                            break;
+                        case "Số điện thoại đã tồn tại":
+                            ModelState.AddModelError("phone", error);
+                            break;
+                        case "Số điện thoại không được có chữ.":
+                            ModelState.AddModelError("phone", error);
+                            break;
+                        case "Địa chỉ không được để trống.":
+                            ModelState.AddModelError("address", error);
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+            }
+            return View(account);
         }
 
         [HttpPost]
@@ -340,7 +391,7 @@ namespace do_an_web.Controllers
         {
             ViewBag.use = Session["username"];
             return View();
-        }
+        } 
 
         // POST: Accounts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -353,31 +404,68 @@ namespace do_an_web.Controllers
             if (string.IsNullOrEmpty(account.full_name))
             {
                 ModelState.AddModelError("full_name", "Tên khách hàng không được để trống.");
+                goto ok;
             }
 
             if (string.IsNullOrEmpty(account.username))
             {
-                ModelState.AddModelError("username", "Username không được để trống.");
+                ModelState.AddModelError("username", "Username không được để trống."); goto ok;
+            }
+            else
+            {
+                var data = db.Accounts.FirstOrDefault(u => u.username == account.username);
+                if (data!=null)
+                {
+                    ModelState.AddModelError("username", "Username đã tồn tại"); goto ok;
+                }
+
             }
 
             if (string.IsNullOrEmpty(account.password))
             {
-                ModelState.AddModelError("password", "Password không được để trống.");
+                ModelState.AddModelError("password", "Password không được để trống."); goto ok;
             }
 
             if (string.IsNullOrEmpty(account.email))
             {
-                ModelState.AddModelError("email", "Email không được để trống.");
+                ModelState.AddModelError("email", "Email không được để trống."); goto ok;
+            }
+            else
+            {
+                if (!account.email.Contains("@"))
+                {
+                    ModelState.AddModelError("email", "Email không đúng dịnh dạng."); goto ok;
+                }
+                else
+                {
+                    var data = db.Accounts.FirstOrDefault(u => u.email == account.email);
+                    if (data != null)
+                    {
+                        ModelState.AddModelError("email", "email đã tồn tại"); goto ok;
+                    }
+                }
             }
 
             if (string.IsNullOrEmpty(account.phone))
             {
-                ModelState.AddModelError("phone", "Số điện thoại không được để trống.");
+                ModelState.AddModelError("phone", "Số điện thoại không được để trống."); goto ok;
             }
-
+            else
+            {
+                try
+                {
+                    int.Parse(account.phone);
+                    var data = db.Accounts.FirstOrDefault(u => u.phone == account.phone);
+                    if (data != null)
+                    {
+                        ModelState.AddModelError("Phone", "Phone đã tồn tại"); goto ok;
+                    }
+                }
+                catch { ModelState.AddModelError("phone", "Số điện thoại không được có chữ."); goto ok; }
+            }
             if (string.IsNullOrEmpty(account.address))
             {
-                ModelState.AddModelError("address", "Địa chỉ không được để trống.");
+                ModelState.AddModelError("address", "Địa chỉ không được để trống."); goto ok;
             }
             if (ModelState.IsValid)
             {
@@ -398,9 +486,12 @@ namespace do_an_web.Controllers
                     return RedirectToAction("Quanlythanhvien", "Accounts");
                 }
             }
+            ok:
             if (Session["check"] == null)
             {
-                return RedirectToAction("dangky", "Accounts");
+                TempData["ModelStateErrors"] = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)).ToList();
+
+                return RedirectToAction("dangky");
             }
             return RedirectToAction("Quanlythanhvien", "Accounts");
         }
@@ -436,8 +527,13 @@ namespace do_an_web.Controllers
             {
                 db.Entry(account).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Quanlythanhvien","Accounts");
+                if (Session["admin"] != null)
+                {
+                    return RedirectToAction("Quanlythanhvien", "Accounts");
+                }
+                else { return RedirectToAction("index"); }
             }
+            
             return View(account);
         }
         public ActionResult Dangxuat()

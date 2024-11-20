@@ -99,45 +99,45 @@ else
     document.getElementById("pay").addEventListener("change", function () {
         var payMethod = this.value;
         var qrToast = document.getElementById("qr-toast");
- 
-     
+
+
         // Nếu chọn "Thanh toán online", gửi Ajax request để tạo mã QR
         if (payMethod === "Thanh toán online") {
             // Gửi yêu cầu Ajax đến controller để tạo mã QR
             $.ajax({
-                url: '@Url.Action("Create", "autobank")',
-                type: 'GET',
-                data: {
-                    amount: @Model.Total_money(),  // Truyền số tiền từ model
-                    content: 'thanh toan hoa'        // Truyền content từ ViewBag.use
-                },
-                
-                success: function (data) {
-                    // Kiểm tra nếu trả về mã QR
-                    if (data.success && data.qrCodeImage) {
-                        // Hiển thị mã QR
-                        qrToast.style.display = "block";
-                        document.getElementById("qr-content").innerHTML = '<img src="data:image/png;base64,' + data.qrCodeImage + '" alt="QR Code"style="width: 30%"/>';
-                    } else {
-                       
-                        alert("Không thể tạo mã QR.");
-                    }
-                    // Tự động ẩn thẻ sau 20 giây
-                    setTimeout(closeToast, 20000);  // 20 giây
-                },
-                error: function () {
-                    alert('Lỗi tạo mã QR.');
-                }
-            });
+        url: '@Url.Action("Create", "autobank")',
+        type: 'GET',
+        data: {
+            amount: @Model.Total_money(),  // Truyền số tiền từ model
+            content: 'thanh toan hoa'        // Truyền content từ ViewBag.use
+        },
+
+        success: function (data) {
+            // Kiểm tra nếu trả về mã QR
+            if (data.success && data.qrCodeImage) {
+                // Hiển thị mã QR
+                qrToast.style.display = "block";
+                document.getElementById("qr-content").innerHTML = '<img src="data:image/png;base64,' + data.qrCodeImage + '" alt="QR Code"style="width: 30%"/>';
+            } else {
+
+                alert("Không thể tạo mã QR.");
+            }
+            // Tự động ẩn thẻ sau 20 giây
+            setTimeout(closeToast, 20000);  // 20 giây
+        },
+        error: function () {
+            alert('Lỗi tạo mã QR.');
+        }
+    });
         } else {
             qrToast.style.display = "none";
         }
     });
 
     // Hàm đóng thẻ thông báo
-    function closeToast() {
-        document.getElementById("qr-toast").style.display = "none";
-    }
+            function closeToast() {
+                document.getElementById("qr-toast").style.display = "none";
+            }
         </script>
 
 

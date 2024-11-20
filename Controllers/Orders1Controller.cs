@@ -17,6 +17,10 @@ namespace do_an_web.Controllers
         // GET: Orders1
         public ActionResult Index(int pageNumber = 1, int pageSize = 10)
         {
+            if (Session["admin"] == null)
+            {
+                return RedirectToAction("Index", "Products");
+            }
             ViewBag.use = Session["username"];
             var totalRecords = db.Orders.Count();
             var accounts = db.Orders.OrderBy(a => a.order_id).Skip((pageNumber - 1)*pageSize).Take(pageSize).ToList();
